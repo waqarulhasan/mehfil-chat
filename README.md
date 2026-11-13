@@ -88,3 +88,15 @@ After deploying:
 Each person's country flag shows next to their nickname, worked out from their IP address with the free country.is service (no key needed, commercial use allowed). If that lookup fails, the browser's time zone is used instead.
 Optional: create a free IPinfo account and set `IPINFO_TOKEN` in Render's Environment to use IPinfo Lite instead.
 Flag images load from flagcdn.com. People using a VPN will show the VPN's country.
+
+## Room radio
+- Everyone sees a **📻 Radio** button in the chat. It opens a player bar with the current station, Play/Pause and volume.
+- Admins and moderators see **Change station**: it lists popular Pakistani stations from the free Radio Browser directory (radio-browser.info), with a search box for any station worldwide. Everyone in the room gets the station the admin picks.
+- Browsers don't allow sound to start by itself, so each person taps ▶ once to listen.
+- Only secure (https) streams are listed, because http streams are blocked on https sites.
+- Optional default station: set `RADIO_NAME` and `RADIO_URL` (https stream link) in Render's Environment.
+- Stations are the broadcasters' own public streams. Check a station's terms if you plan to feature it heavily, and don't stream music files you don't have the rights to.
+
+## No phone numbers or links
+Every message (main room and private) is checked on the server. Messages with a phone number (e.g. 0300 1234567, +92 300..., digits split by spaces or dashes, Urdu digits) or a link (http, www, wa.me, t.me, instagram.com, anything.com/.pk/...) are not sent, and the sender sees why.
+Admins and moderators can still post links. Edit `TLDS`, `LINK_RE` or `hasPhone` in server.js to change the rules.

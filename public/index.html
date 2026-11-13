@@ -329,6 +329,38 @@ body.inchat{background:#1C2422}
 .chat .msgs::-webkit-scrollbar-track{background:transparent}
 .chat .sys.report{background:#3A2626;color:#F0B4B4}
 @keyframes fadein{from{background:#2E3A2F}}
+
+/* ===== Room radio ===== */
+.radiobar{display:flex;align-items:center;gap:12px;padding:8px 16px;background:#1F2A27;border-bottom:1px solid #2A3431;color:#D3DCD8;flex:none}
+.radiobar[hidden]{display:none}
+.rlogo{width:36px;height:36px;border-radius:8px;object-fit:cover;background:#2D3835;flex:none}
+.rinfo{min-width:0;flex:1}
+.rname{font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rstat{font-size:12px;color:#8E9A95}
+.rplay{width:40px;height:40px;border-radius:50%;border:0;background:#B0637F;color:#fff;font-size:16px;flex:none}
+.rplay:hover{background:#9E5671}
+.rplay:disabled{opacity:.4}
+#rVol{width:110px;accent-color:#7FCBAE}
+.rchange{border:1px solid #3A4541;background:#26302D;color:#D3DCD8;border-radius:8px;padding:7px 10px;font-weight:700;font-size:13px}
+.radiobar.on .rstat{color:#7FCBAE}
+.eq{display:inline-flex;gap:2px;align-items:flex-end;height:10px;margin-right:6px}
+.eq i{width:3px;background:#7FCBAE;animation:eq 0.9s ease-in-out infinite}
+.eq i:nth-child(2){animation-delay:.2s}.eq i:nth-child(3){animation-delay:.4s}
+@keyframes eq{0%,100%{height:3px}50%{height:10px}}
+.rsearch{display:flex;gap:8px;margin-bottom:12px}
+.rsearch .nick{font-size:15px;padding:10px 12px}
+.rsearch .go{width:auto;padding:0 16px;font-size:16px}
+.rlist{max-height:340px;overflow:auto;border:1px solid var(--line);border-radius:10px;margin-bottom:12px}
+.rlist button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);background:#fff;padding:9px 12px}
+.rlist button:hover{background:var(--mist)}
+.rlist img{width:28px;height:28px;border-radius:6px;object-fit:cover;background:var(--mist);flex:none}
+.rlist .rt{font-weight:700;font-size:14px}.rlist .rs{font-size:12px;color:var(--muted)}
+.rlist .msgx{padding:16px;color:var(--muted);font-size:14px}
+#radioDlg{width:min(520px,94vw)}
+@media (max-width:520px){#rVol{display:none}.radiobar{gap:8px;padding:8px 10px}}
+@media (max-width:520px){#radioBtn{font-size:0;padding:7px 9px}#radioBtn::before{content:'📻';font-size:15px}}
+.hintline{font-size:12px;color:#7A8782;padding:4px 16px 0;flex:none}
+@media (max-width:520px){.hintline{display:none}}
 </style>
 <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "WebSite", "name": "Mehfil Chat", "alternateName": "Mehfil Chat – Pakistani Chat Room", "url": "https://mehfilchat.com/", "inLanguage": "en", "description": "Free Pakistani chat room with no registration."}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is Mehfil Chat a free Pakistani chat room?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Mehfil Chat is completely free. There are no paid plans, no coins and no hidden charges."}}, {"@type": "Question", "name": "Do I need to register or sign up?", "acceptedAnswer": {"@type": "Answer", "text": "No. There's no registration, email or password. Type a nickname, tap Start chatting and you're in the Pakistani chat room straight away."}}, {"@type": "Question", "name": "Can I chat in Urdu or Punjabi?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. You can chat in Urdu, Roman Urdu, Punjabi, English or any mix. Most people write in Roman Urdu, like on WhatsApp."}}, {"@type": "Question", "name": "Can overseas Pakistanis join?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Pakistanis in the UK, USA, Canada, UAE, Saudi Arabia and anywhere else can join the same chat room as people in Pakistan."}}, {"@type": "Question", "name": "Does Mehfil Chat work on mobile?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. It works in the browser on any Android phone or iPhone. There's no app to download."}}, {"@type": "Question", "name": "Is the chat moderated?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Admins and moderators can delete messages, remove people and ban anyone who breaks the chat rules. You can also mute anyone who bothers you."}}]}]</script>
 </head>
@@ -388,7 +420,8 @@ body.inchat{background:#1C2422}
     <h2>Chat rules</h2>
     <ul class="rules" id="rulesList">
       <li>Be respectful. No abuse, threats or hate speech.</li>
-      <li>Don't share your phone number, address or other personal details.</li>
+      <li><b>No phone numbers or links.</b> Messages with a phone number, WhatsApp number or any link won't be sent.</li>
+      <li>Don't share your address or other personal details.</li>
       <li>No spam, adverts or repeated messages.</li>
       <li>No adult content. This is a public room.</li>
       <li>Tap anyone's nickname to chat privately. If someone bothers you, tap Mute in your private chat with them.</li>
@@ -432,12 +465,21 @@ body.inchat{background:#1C2422}
     <span class="room">Main room</span>
     <span class="pill"><span class="dot"></span><span id="countChat">1 online</span></span>
     <span class="spacer"></span>
+    <button class="hbtn" id="radioBtn" type="button" aria-expanded="false">📻 Radio</button>
     <button class="hbtn" id="modsBtn" type="button" hidden>Moderators</button>
     <button class="hbtn" id="clearBtn" type="button" hidden>Clear chat</button>
     <button class="hbtn" id="rulesBtn" type="button">Rules</button>
     <button class="hbtn peopleBtn" id="peopleBtn" type="button">People</button>
     <button class="hbtn" id="leaveBtn" type="button">Leave</button>
   </div></header>
+  <div class="radiobar" id="radiobar" hidden>
+    <img class="rlogo" id="rLogo" alt="" width="36" height="36">
+    <div class="rinfo"><div class="rname" id="rName">Mehfil Radio</div><div class="rstat" id="rStat">Not playing</div></div>
+    <button type="button" class="rplay" id="rPlay" aria-label="Play radio">▶</button>
+    <input type="range" id="rVol" min="0" max="1" step="0.05" value="0.7" aria-label="Radio volume">
+    <button type="button" class="rchange" id="rChange" hidden>Change station</button>
+    <audio id="rAudio" preload="none"></audio>
+  </div>
   <div class="body">
     <div class="main">
       <div class="tabs" id="tabs" role="tablist" aria-label="Chats">
@@ -452,6 +494,7 @@ body.inchat{background:#1C2422}
       <div class="msgs" id="msgs" aria-live="polite"></div>
       <div id="pmPanes"></div>
       <div class="note" id="note" role="alert"></div>
+      <div class="hintline">Be respectful · No phone numbers or links</div>
       <div class="emo" id="emo" aria-label="Quick emoji"></div>
       <form class="composer" id="sendForm">
         <textarea id="text" rows="1" maxlength="400" placeholder="Type a message…" aria-label="Message"></textarea>
@@ -482,6 +525,12 @@ body.inchat{background:#1C2422}
   <div class="repacts" id="reportActs"></div>
   <button class="closex" type="button" onclick="this.closest('dialog').close()">Close</button></dialog>
 <div class="umenu" id="umenu" hidden role="menu"></div>
+<dialog id="radioDlg"><h3>Choose a radio station</h3>
+  <p class="mdesc">Stations come from the free Radio Browser directory. Everyone in the room will hear the station you pick.</p>
+  <form id="rSearch" class="rsearch"><input class="nick" id="rQuery" placeholder="Search stations, e.g. FM 100, Urdu, Bollywood"><button class="go" type="submit">Search</button></form>
+  <div class="rlist" id="rList"></div>
+  <div class="repacts"><button type="button" id="rOff">Turn radio off</button></div>
+  <button class="closex" type="button" onclick="this.closest('dialog').close()">Close</button></dialog>
 <dialog id="rulesDlg"><h3>Chat rules</h3><ul id="rulesCopy"></ul><button class="go" type="button" onclick="this.closest('dialog').close()">Got it</button></dialog>
 
 <script>
@@ -536,6 +585,7 @@ function enterChat(){
   document.body.classList.add('inchat');
   $('#clearBtn').hidden=!me.admin;
   $('#modsBtn').hidden=!me.owner;
+  $('#rChange').hidden=!me.admin;
   $('#msgs').innerHTML='';
   connect();
   setTimeout(()=>$('#text').focus(),50);
@@ -543,15 +593,16 @@ function enterChat(){
 function connect(){
   if(es)es.close();
   es=new EventSource('/api/stream?id='+me.id+'&token='+me.token);
-  es.addEventListener('hello',e=>{const d=JSON.parse(e.data);$('#msgs').innerHTML='';lastFrom=null;pending.clear();d.history.forEach(add);renderPeople(d.online);setConn(true);scrollDown(true)});
+  es.addEventListener('hello',e=>{const d=JSON.parse(e.data);setRadio(d.radio);$('#msgs').innerHTML='';lastFrom=null;pending.clear();d.history.forEach(add);renderPeople(d.online);setConn(true);scrollDown(true)});
   es.addEventListener('msg',e=>{add(JSON.parse(e.data));scrollDown()});
   es.addEventListener('online',e=>renderPeople(JSON.parse(e.data)));
   es.addEventListener('delete',e=>{const id=JSON.parse(e.data).id;const el=document.querySelector('[data-mid="'+id+'"]');if(el)el.remove()});
   es.addEventListener('clear',()=>{$('#msgs').innerHTML='';lastFrom=null});
+  es.addEventListener('radio',e=>setRadio(JSON.parse(e.data),true));
   es.addEventListener('pm',e=>onPM(JSON.parse(e.data)));
   es.addEventListener('pmgone',e=>onPMGone(JSON.parse(e.data)));
   es.addEventListener('report',e=>onReport(JSON.parse(e.data)));
-  es.addEventListener('role',e=>{const d=JSON.parse(e.data);me.admin=d.admin;sessionStorageSet('me',JSON.stringify(me));$('#clearBtn').hidden=!me.admin;
+  es.addEventListener('role',e=>{const d=JSON.parse(e.data);me.admin=d.admin;$('#rChange').hidden=!me.admin;sessionStorageSet('me',JSON.stringify(me));$('#clearBtn').hidden=!me.admin;
     $('#note').textContent='';connect()});
   es.addEventListener('kicked',e=>{const t=JSON.parse(e.data).text;es.close();backToStart(t)});
   es.onerror=()=>{setConn(false);
@@ -561,6 +612,7 @@ function connect(){
 }
 function setConn(ok){const c=$('#conn');c.textContent=ok?'':'Reconnecting…';c.classList.toggle('bad',!ok);c.style.display=ok?'none':'block'}
 function backToStart(msg){
+  try{audio.pause()}catch(e){}
   try{resetTabs()}catch(e){}
   try{sessionStorage.removeItem('me')}catch(e){}
   me=null;if(es)es.close();document.body.classList.remove('inchat');$('#joinErr').textContent=msg||'';
@@ -638,7 +690,7 @@ function openPM(u,focus){
   let t=tabs.get(u.id);
   if(!t){
     const pane=document.createElement('div');pane.className='msgs';pane.hidden=true;pane.setAttribute('aria-live','polite');
-    const intro=document.createElement('div');intro.className='sys pmintro';intro.textContent='Private chat with '+u.nick+'. Only you two can see these messages. Never share your phone number, address or photos.';pane.appendChild(intro);
+    const intro=document.createElement('div');intro.className='sys pmintro';intro.textContent='Private chat with '+u.nick+'. Only you two can see these messages. Phone numbers and links aren\u2019t allowed here either.';pane.appendChild(intro);
     $('#pmPanes').appendChild(pane);
     const b=document.createElement('button');b.type='button';b.className='tab';b.setAttribute('role','tab');
     const d=document.createElement('span');d.className='dot2';d.style.background=u.color;
@@ -756,6 +808,58 @@ $('#addMod').addEventListener('submit',async e=>{e.preventDefault();$('#modErr')
   try{const d=await mods('add',{name:$('#modName').value.trim(),password:$('#modPass').value});renderMods(d.mods);$('#modName').value='';$('#modPass').value='';if(d.warning)$('#modErr').textContent=d.warning}
   catch(x){$('#modErr').textContent=x.message}});
 $('#clearBtn').onclick=()=>{if(confirm('Clear the chat for everyone?'))admin('clear')};
+
+
+// ---- Room radio ----
+let radio={name:'',url:'',favicon:''};
+const RB_SERVERS=['https://de1.api.radio-browser.info','https://fi1.api.radio-browser.info','https://de2.api.radio-browser.info','https://nl1.api.radio-browser.info'];
+const audio=$('#rAudio');
+try{const v=localStorage.getItem('rvol');if(v)$('#rVol').value=v}catch(e){}
+audio.volume=+$('#rVol').value;
+function setRadio(r,announce){
+  const wasPlaying=!audio.paused;radio=r||{name:'',url:''};
+  $('#rName').textContent=radio.url?(radio.name||'Radio'):'Mehfil Radio';
+  const logo=$('#rLogo');if(radio.favicon){logo.src=radio.favicon;logo.hidden=false;logo.onerror=()=>logo.hidden=true}else logo.hidden=true;
+  $('#rPlay').disabled=!radio.url;
+  if(!radio.url){audio.pause();audio.removeAttribute('src');status('No station on'+(me&&me.admin?'. Tap Change station to pick one.':' right now.'));return}
+  if(audio.dataset.src!==radio.url){audio.pause();audio.dataset.src=radio.url;audio.src=radio.url;if(wasPlaying)play();else status('Tap ▶ to listen')}
+}
+function status(t,on){$('#rStat').innerHTML='';if(on){const e=document.createElement('span');e.className='eq';e.innerHTML='<i></i><i></i><i></i>';$('#rStat').appendChild(e)}$('#rStat').appendChild(document.createTextNode(t));$('#radiobar').classList.toggle('on',!!on)}
+function play(){if(!radio.url)return;status('Connecting…');audio.play().then(()=>{$('#rPlay').textContent='⏸';$('#rPlay').setAttribute('aria-label','Pause radio')}).catch(()=>status('This station can’t play right now. Try again or ask an admin to change it.'))}
+$('#rPlay').onclick=()=>{if(audio.paused)play();else{audio.pause()}};
+audio.addEventListener('playing',()=>status('Live',true));
+audio.addEventListener('pause',()=>{$('#rPlay').textContent='▶';$('#rPlay').setAttribute('aria-label','Play radio');if(radio.url)status('Paused')});
+audio.addEventListener('waiting',()=>status('Buffering…'));
+audio.addEventListener('error',()=>{if(radio.url)status('This station can’t play right now.')});
+$('#rVol').oninput=e=>{audio.volume=+e.target.value;try{localStorage.setItem('rvol',e.target.value)}catch(x){}};
+$('#radioBtn').onclick=()=>{const b=$('#radiobar');b.hidden=!b.hidden;$('#radioBtn').setAttribute('aria-expanded',String(!b.hidden));$('#rChange').hidden=!(me&&me.admin)};
+async function rb(path){
+  for(const base of RB_SERVERS.sort(()=>Math.random()-.5)){
+    try{const ctrl=new AbortController();const t=setTimeout(()=>ctrl.abort(),6000);const r=await fetch(base+path,{signal:ctrl.signal});clearTimeout(t);if(r.ok)return await r.json()}catch(e){}
+  }
+  throw new Error('Radio directory not reachable');
+}
+async function loadStations(q){
+  const list=$('#rList');list.innerHTML='<div class="msgx">Loading stations…</div>';
+  try{
+    const path=q?'/json/stations/search?name='+encodeURIComponent(q)+'&hidebroken=true&order=clickcount&reverse=true&limit=60'
+               :'/json/stations/search?countrycode=PK&hidebroken=true&order=clickcount&reverse=true&limit=60';
+    const data=(await rb(path)).filter(st=>/^https:\/\//.test(st.url_resolved||''));
+    list.innerHTML='';
+    if(!data.length){list.innerHTML='<div class="msgx">No secure stations found. Try another search.</div>';return}
+    data.slice(0,40).forEach(st=>{
+      const b=document.createElement('button');b.type='button';
+      const img=document.createElement('img');img.alt='';if(/^https:/.test(st.favicon||''))img.src=st.favicon;img.onerror=()=>img.style.visibility='hidden';
+      const tx=document.createElement('div');const t1=document.createElement('div');t1.className='rt';t1.textContent=st.name.trim();
+      const t2=document.createElement('div');t2.className='rs';t2.textContent=[st.country,(st.tags||'').split(',').slice(0,3).join(', ')].filter(Boolean).join(' · ');
+      tx.append(t1,t2);b.append(img,tx);
+      b.onclick=()=>{admin('radio',{station:{name:st.name.trim(),url:st.url_resolved,favicon:/^https:/.test(st.favicon||'')?st.favicon:''}});$('#radioDlg').close()};
+      list.appendChild(b)});
+  }catch(e){list.innerHTML='<div class="msgx">Couldn’t load the station list. Check your connection and try again.</div>'}
+}
+$('#rChange').onclick=()=>{$('#rQuery').value='';$('#radioDlg').showModal();loadStations('')};
+$('#rSearch').addEventListener('submit',e=>{e.preventDefault();loadStations($('#rQuery').value.trim())});
+$('#rOff').onclick=()=>{admin('radio',{station:{}});$('#radioDlg').close()};
 
 // ---- Header buttons ----
 $('#leaveBtn').onclick=()=>{if(me)navigator.sendBeacon('/api/leave',new Blob([JSON.stringify({id:me.id,token:me.token})],{type:'application/json'}));backToStart('')};

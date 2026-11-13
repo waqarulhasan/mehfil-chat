@@ -45,6 +45,9 @@ const history = [];
 const bans = new Map();       // ip or nick -> expiry time
 const pmLog = new Map();      // 'idA|idB' -> last 30 private messages (memory only, for reports)
 const PM_KEEP = 30;
+// Room radio: one station everyone can listen to. Admins change it in the chat.
+// Optional defaults: RADIO_NAME and RADIO_URL (must be https) in the host's environment settings.
+let radio = { name: process.env.RADIO_NAME || '', url: /^https:\/\//.test(process.env.RADIO_URL || '') ? process.env.RADIO_URL : '', favicon: '', by: '' };
 // softer name colours (still readable on white)
 const COLORS = ['#E39BB4', '#7FCBAE', '#E2AA84', '#B3A8E4', '#8FB8E2', '#D79DB4', '#9DCB9F', '#DCC080']; // soft pastels for the dark chat
 
@@ -57,6 +60,23 @@ function clean(t) {
   let s = String(t).replace(/[\u0000-\u0008\u000B-\u001F\u007F]/g, '').trim().slice(0, MAX_LEN);
   for (const w of BAD_WORDS) s = s.replace(new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'), '***');
   return s;
+}
+// ---- No phone numbers or links (admins and moderators are allowed links) ----
+const TLDS = 'com|net|org|pk|in|uk|co|io|me|info|biz|xyz|online|site|app|link|live|store|shop|club|top|ly|gg|tv|us|ca|ae|sa|tk|ml|ga|cf|gq|ru|cn|de|fr|au|chat|fun|vip|pro|page|dev|cc|ws|to|so|in';
+const LINK_RE = new RegExp(String.raw`(https?:\/\/|www\.|\b(wa\.me|t\.me|bit\.ly|tinyurl|chat\.whatsapp|discord\.gg|instagram\.com|facebook\.com|fb\.com|snapchat\.com|tiktok\.com|telegram\.me)\b|\b[a-z0-9-]{2,}\s?(\.|\[dot\]|\(dot\)|\sdot\s)\s?(` + TLDS + String.raw`)\b(\/\S*)?)`, 'i');
+function toAsciiDigits(t) { return t.replace(/[۰-۹]/g, d => String(d.charCodeAt(0) - 0x06F0)).replace(/[٠-٩]/g, d => String(d.charCodeAt(0) - 0x0660)); }
+function hasPhone(t) {
+  t = toAsciiDigits(t);
+  // join digits separated by spaces, dashes, dots, brackets or plus signs, then look for 7+ digits in a row
+  const joined = t.replace(/(\d)[\s\-.()_\/]{0,3}(?=\d)/g, '$1');
+  // phone-like: starts with + or 0, or is 10+ digits long (avoids blocking scores like "250 300 400")
+  for (const m of joined.matchAll(/(\+\s?)?(\d{7,})/g)) if (m[1] || m[2][0] === '0' || m[2].length >= 10) return true;
+  return false;
+}
+function blockedReason(text) {
+  if (hasPhone(text)) return "Phone numbers aren't allowed in Mehfil Chat. Please keep personal details private.";
+  if (LINK_RE.test(text)) return "Links aren't allowed in Mehfil Chat.";
+  return '';
 }
 function body(req) {
   return new Promise((ok, no) => {
@@ -159,7 +179,7 @@ const server = http.createServer(async (req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache', Connection: 'keep-alive', 'X-Accel-Buffering': 'no' });
     if (u.res) u.res.end();
     u.res = res; clearTimeout(u.bye);
-    send(res, 'hello', { history, online: online(), me: u.id });
+    send(res, 'hello', { history, online: online(), me: u.id, radio });
     if (!u.joined) { u.joined = true; sys(`${u.nick} joined the chat`); }
     broadcast('online', online());
     const ping = setInterval(() => res.write(': ping\n\n'), 20000);
@@ -181,6 +201,7 @@ const server = http.createServer(async (req, res) => {
       const now = Date.now(); u.sent = u.sent.filter(t => now - t < RATE.per);
       if (!u.admin && u.sent.length >= RATE.count) return json(res, 429, { error: 'Slow down a little, you are sending messages too fast.' });
       const text = clean(b.text || ''); if (!text) return json(res, 400, { error: 'Empty message.' });
+      if (!u.admin) { const why = blockedReason(text); if (why) return json(res, 400, { error: why }); }
       u.sent.push(now);
       const cid = String(b.cid || '').slice(0, 24);
       push({ type: 'msg', id: crypto.randomBytes(5).toString('hex'), cid, from: u.id, nick: u.nick, color: u.color, admin: !!u.admin, country: u.country, text, at: now });
@@ -224,6 +245,15 @@ const server = http.createServer(async (req, res) => {
       if (b.action === 'delete') {
         const i = history.findIndex(m => m.id === b.msgId); if (i > -1) history.splice(i, 1);
         broadcast('delete', { id: b.msgId }); return json(res, 200, { ok: true });
+      }
+      if (b.action === 'radio') {
+        const st = b.station || {};
+        const url = String(st.url || '').slice(0, 500), favicon = String(st.favicon || '').slice(0, 500);
+        if (url && !/^https:\/\//.test(url)) return json(res, 400, { error: 'Only secure (https) radio streams can play on the site.' });
+        radio = { name: clean(st.name || '').slice(0, 80), url, favicon: /^https:\/\//.test(favicon) ? favicon : '', by: a.nick };
+        broadcast('radio', radio);
+        sys(url ? `${a.nick} put on ${radio.name || 'a radio station'} 📻` : `${a.nick} turned the radio off`);
+        return json(res, 200, { ok: true });
       }
       if (b.action === 'clear') {
         history.length = 0; broadcast('clear', {}); sys('The chat was cleared by an admin'); return json(res, 200, { ok: true });
@@ -270,6 +300,7 @@ const server = http.createServer(async (req, res) => {
       const now = Date.now(); u.sent = u.sent.filter(x => now - x < RATE.per);
       if (!u.admin && u.sent.length >= RATE.count) return json(res, 429, { error: 'Slow down a little, you are sending messages too fast.' });
       const text = clean(b.text || ''); if (!text) return json(res, 400, { error: 'Empty message.' });
+      if (!u.admin) { const why = blockedReason(text); if (why) return json(res, 400, { error: why }); }
       u.sent.push(now);
       const m = { id: crypto.randomBytes(5).toString('hex'), cid: String(b.cid || '').slice(0, 24), from: u.id, nick: u.nick, color: u.color, admin: !!u.admin, country: u.country, to: t.id, toNick: t.nick, toColor: t.color, toAdmin: !!t.admin, toCountry: t.country, text, at: now };
       const k = pmKey(u.id, t.id); const log = pmLog.get(k) || []; log.push(m); if (log.length > PM_KEEP) log.shift(); pmLog.set(k, log);
