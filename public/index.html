@@ -188,6 +188,36 @@ body.inchat .adwrap{display:none}
 .faq details p{margin:10px 0 0;color:var(--muted)}
 .flinks{display:flex;flex-wrap:wrap;gap:14px}
 .flinks a{color:#BFD3CA}
+
+/* ===== Compact chat list (Name → message) ===== */
+.chat header .bar{padding:12px 16px}
+.msgs{background:#fff;padding:0;gap:0;border-right:1px solid var(--line)}
+.m{display:flex;align-items:baseline;gap:8px;max-width:none;align-self:stretch;background:none;border-radius:0;box-shadow:none;
+   padding:9px 16px;border-bottom:1px solid #EDF1EF;animation:fadein .15s ease-out}
+.m.me{background:#F2FAF6;border-radius:0}
+.m.adm{border-left:3px solid var(--sabz);padding-left:13px}
+.m.sending{opacity:.55}
+.m .n{flex:none;font:800 16px/1.4 "Nunito Sans",sans-serif;white-space:nowrap;cursor:pointer}
+.m.me .n{cursor:default}
+.m .ar{flex:none;color:#8A9893;font-size:14px}
+.m .t{flex:1;min-width:0;font-size:16px;line-height:1.45;white-space:pre-wrap;overflow-wrap:break-word;word-break:normal}
+.m .tm{flex:none;font-size:11px;color:#8A9893;text-align:right}
+.m .del{float:none;order:5;margin:0;opacity:0}
+.m:hover .del{opacity:1}
+.sys{align-self:stretch;text-align:center;border-radius:0;background:#FAFBFA;margin:0;padding:6px 12px;border-bottom:1px solid #EDF1EF;font-style:italic}
+@keyframes fadein{from{background:#FFF7D6}}
+.composer{background:#fff;border-top:1px solid var(--line)}
+.emo{background:#fff}
+.m.me,.m.adm{align-self:stretch}
+.ul .acts{flex-basis:100%;padding-left:36px;margin-top:4px;justify-content:flex-start}
+@media (max-width:520px){
+  .m{padding:8px 12px;gap:6px}.m .tm{display:none}.m .n{font-size:15px}
+  .chat header .bar{gap:6px;padding:10px 10px}
+  .chat header .brand{font-size:0!important;gap:0}
+  .chat header .pill{padding:5px 10px;font-size:13px}
+  .hbtn{padding:7px 9px;font-size:13px}
+  #rulesBtn{display:none}
+}
 </style>
 <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "WebSite", "name": "Mehfil Chat", "alternateName": "Mehfil Chat – Pakistani Chat Room", "url": "https://mehfilchat.com/", "inLanguage": "en", "description": "Free Pakistani chat room with no registration."}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is Mehfil Chat a free Pakistani chat room?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Mehfil Chat is completely free. There are no paid plans, no coins and no hidden charges."}}, {"@type": "Question", "name": "Do I need to register or sign up?", "acceptedAnswer": {"@type": "Answer", "text": "No. There's no registration, email or password. Type a nickname, tap Start chatting and you're in the Pakistani chat room straight away."}}, {"@type": "Question", "name": "Can I chat in Urdu or Punjabi?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. You can chat in Urdu, Roman Urdu, Punjabi, English or any mix. Most people write in Roman Urdu, like on WhatsApp."}}, {"@type": "Question", "name": "Can overseas Pakistanis join?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Pakistanis in the UK, USA, Canada, UAE, Saudi Arabia and anywhere else can join the same chat room as people in Pakistan."}}, {"@type": "Question", "name": "Does Mehfil Chat work on mobile?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. It works in the browser on any Android phone or iPhone. There's no app to download."}}, {"@type": "Question", "name": "Is the chat moderated?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Admins and moderators can delete messages, remove people and ban anyone who breaks the chat rules. You can also mute anyone who bothers you."}}]}]</script>
 </head>
@@ -379,7 +409,7 @@ function enterChat(){
 function connect(){
   if(es)es.close();
   es=new EventSource('/api/stream?id='+me.id+'&token='+me.token);
-  es.addEventListener('hello',e=>{const d=JSON.parse(e.data);$('#msgs').innerHTML='';lastFrom=null;d.history.forEach(add);renderPeople(d.online);setConn(true);scrollDown(true)});
+  es.addEventListener('hello',e=>{const d=JSON.parse(e.data);$('#msgs').innerHTML='';lastFrom=null;pending.clear();d.history.forEach(add);renderPeople(d.online);setConn(true);scrollDown(true)});
   es.addEventListener('msg',e=>{add(JSON.parse(e.data));scrollDown()});
   es.addEventListener('online',e=>renderPeople(JSON.parse(e.data)));
   es.addEventListener('delete',e=>{const id=JSON.parse(e.data).id;const el=document.querySelector('[data-mid="'+id+'"]');if(el)el.remove()});
@@ -398,19 +428,26 @@ function backToStart(msg){
   me=null;if(es)es.close();document.body.classList.remove('inchat');$('#joinErr').textContent=msg||'';
 }
 function fmt(t){return new Date(t).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}
+const pending=new Map(); // cid -> row element (my messages shown instantly)
+function row(m,mine){
+  const d=document.createElement('div');d.className='m'+(mine?' me':'')+(m.admin?' adm':'');if(m.id)d.dataset.mid=m.id;
+  const n=document.createElement('button');n.type='button';n.className='n';n.style.color=m.color;n.textContent=m.nick;
+  if(m.admin){const bd=document.createElement('span');bd.className='badge';bd.textContent='ADMIN';n.appendChild(bd)}
+  if(!mine&&!m.admin)n.onclick=()=>{if(confirmMute(m.nick))mute(m.from)};
+  const ar=document.createElement('span');ar.className='ar';ar.textContent='→';ar.setAttribute('aria-hidden','true');
+  const t=document.createElement('span');t.className='t';t.textContent=m.text;
+  const tm=document.createElement('span');tm.className='tm';tm.textContent=fmt(m.at);
+  d.append(n,ar,t,tm);
+  if(me&&me.admin){const x=document.createElement('button');x.type='button';x.className='del';x.textContent='Delete';x.setAttribute('aria-label','Delete message');x.onclick=()=>admin('delete',{msgId:d.dataset.mid});d.appendChild(x)}
+  return d;
+}
 function add(m){
   const box=$('#msgs');
-  if(m.type==='sys'){const d=document.createElement('div');d.className='sys';d.textContent=m.text;box.appendChild(d);lastFrom=null;return}
+  if(m.type==='sys'){const d=document.createElement('div');d.className='sys';d.textContent=m.text;box.appendChild(d);return}
   if(muted.has(m.from))return;
   const mine=me&&m.from===me.id;
-  const d=document.createElement('div');d.className='m'+(mine?' me':'')+(m.admin?' adm':'')+(lastFrom===m.from?' same':'');d.dataset.mid=m.id;
-  if(me&&me.admin){const x=document.createElement('button');x.type='button';x.className='del';x.textContent='Delete';x.setAttribute('aria-label','Delete message');x.onclick=()=>admin('delete',{msgId:m.id});d.appendChild(x)}
-  if(lastFrom!==m.from){const n=document.createElement('button');n.type='button';n.className='n';n.style.color=m.color;n.textContent=mine?'You':m.nick;
-    if(m.admin){const bd=document.createElement('span');bd.className='badge';bd.textContent='ADMIN';n.appendChild(bd)}
-    if(!mine&&!m.admin)n.onclick=()=>{if(confirmMute(m.nick))mute(m.from)};d.appendChild(n)}
-  const t=document.createElement('div');t.className='t';t.textContent=m.text;d.appendChild(t);
-  const tm=document.createElement('div');tm.className='tm';tm.textContent=fmt(m.at);d.appendChild(tm);
-  box.appendChild(d);lastFrom=m.from;
+  if(mine&&m.cid&&pending.has(m.cid)){const el=pending.get(m.cid);pending.delete(m.cid);el.dataset.mid=m.id;el.classList.remove('sending');el.querySelector('.tm').textContent=fmt(m.at);return}
+  box.appendChild(row(m,mine));
 }
 function confirmMute(n){return window.confirm('Mute '+n+'? You won’t see their messages any more.')}
 function mute(id){muted.has(id)?muted.delete(id):muted.add(id);sessionStorageSet('muted',JSON.stringify([...muted]));
@@ -446,9 +483,14 @@ ta.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefa
 $('#sendForm').addEventListener('submit',async e=>{
   e.preventDefault();const text=ta.value.trim();if(!text||!me)return;
   ta.value='';ta.style.height='auto';$('#note').textContent='';
-  try{const r=await fetch('/api/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:me.id,token:me.token,text})});
-    if(!r.ok){const d=await r.json().catch(()=>({}));if(r.status===401)return backToStart('Your session ended. Join again to keep chatting.');$('#note').textContent=d.error||'Message not sent.';ta.value=text}
-  }catch(x){$('#note').textContent='Message not sent. Check your connection.';ta.value=text}
+  const cid=Math.random().toString(36).slice(2,12);
+  const mine=peopleCache.find(u=>u.id===me.id)||{};
+  const el=row({nick:me.nick,color:mine.color||'#0B3D2E',admin:me.admin,text,at:Date.now()},true);el.classList.add('sending');
+  $('#msgs').appendChild(el);pending.set(cid,el);scrollDown(true);
+  const fail=msg=>{el.remove();pending.delete(cid);$('#note').textContent=msg;ta.value=text};
+  try{const r=await fetch('/api/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:me.id,token:me.token,text,cid})});
+    if(!r.ok){const d=await r.json().catch(()=>({}));if(r.status===401)return backToStart('Your session ended. Join again to keep chatting.');fail(d.error||'Message not sent.')}
+  }catch(x){fail('Message not sent. Check your connection.')}
   ta.focus();
 });
 ['😀','😂','😍','👍','🙏','❤️','🔥','😎','🤣','😢','👋','🇵🇰','☕','🎉'].forEach(x=>{const b=document.createElement('button');b.type='button';b.textContent=x;b.setAttribute('aria-label','Add '+x);b.onclick=()=>{ta.value+=x;ta.focus()};$('#emo').appendChild(b)});

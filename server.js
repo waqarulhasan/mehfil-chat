@@ -146,7 +146,8 @@ const server = http.createServer(async (req, res) => {
       if (!u.admin && u.sent.length >= RATE.count) return json(res, 429, { error: 'Slow down a little, you are sending messages too fast.' });
       const text = clean(b.text || ''); if (!text) return json(res, 400, { error: 'Empty message.' });
       u.sent.push(now);
-      push({ type: 'msg', id: crypto.randomBytes(5).toString('hex'), from: u.id, nick: u.nick, color: u.color, admin: !!u.admin, text, at: now });
+      const cid = String(b.cid || '').slice(0, 24);
+      push({ type: 'msg', id: crypto.randomBytes(5).toString('hex'), cid, from: u.id, nick: u.nick, color: u.color, admin: !!u.admin, text, at: now });
       return json(res, 200, { ok: true });
     } catch { return json(res, 400, { error: 'Bad request.' }); }
   }
