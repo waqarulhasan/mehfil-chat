@@ -75,7 +75,7 @@ function remove(u, event, text) {
 }
 function auth(q) { const u = users.get(q.id); return u && u.token === q.token ? u : null; }
 
-const TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.svg': 'image/svg+xml', '.png': 'image/png', '.ico': 'image/x-icon' };
+const TYPES = { '.html': 'text/html; charset=utf-8', '.txt': 'text/plain; charset=utf-8', '.xml': 'application/xml; charset=utf-8', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.css': 'text/css', '.js': 'text/javascript', '.svg': 'image/svg+xml', '.png': 'image/png', '.ico': 'image/x-icon' };
 
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, 'http://x');
@@ -224,15 +224,27 @@ const server = http.createServer(async (req, res) => {
     return json(res, 200, { ok: true });
   }
 
-  // Static files
-  let p = path.normalize(decodeURIComponent(url.pathname)).replace(/^(\.\.[\/\\])+/, '');
-  if (p === '/' || p === '\\') p = '/index.html';
-  const file = path.join(__dirname, 'public', p);
-  if (!file.startsWith(path.join(__dirname, 'public'))) { res.writeHead(403); return res.end(); }
+  // Static files (pages, robots.txt, sitemap.xml, images)
+  if (req.method !== 'GET' && req.method !== 'HEAD') { res.writeHead(405); return res.end(); }
+  const pub = path.join(__dirname, 'public');
+  let p = decodeURIComponent(url.pathname);
+  // remove trailing slash (except home) so each page has one address: /lahore-chat-room
+  if (p.length > 1 && p.endsWith('/')) { res.writeHead(301, { Location: p.slice(0, -1) + url.search }); return res.end(); }
+  if (p === '/') p = '/index.html';
+  let file = path.normalize(path.join(pub, p));
+  if (!file.startsWith(pub)) { res.writeHead(403); return res.end(); }
+  if (!path.extname(file)) file = path.join(file, 'index.html');
   fs.readFile(file, (err, data) => {
-    if (err) { res.writeHead(404, { 'Content-Type': 'text/plain' }); return res.end('Not found'); }
-    res.writeHead(200, { 'Content-Type': TYPES[path.extname(file)] || 'application/octet-stream' });
-    res.end(data);
+    if (err) {
+      return fs.readFile(path.join(pub, '404.html'), (e2, d2) => { res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' }); res.end(e2 ? 'Not found' : d2); });
+    }
+    const ext = path.extname(file);
+    res.writeHead(200, {
+      'Content-Type': TYPES[ext] || 'application/octet-stream',
+      'Cache-Control': ext === '.html' ? 'no-cache' : 'public, max-age=86400',
+      'X-Content-Type-Options': 'nosniff'
+    });
+    res.end(req.method === 'HEAD' ? undefined : data);
   });
 });
 

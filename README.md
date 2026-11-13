@@ -66,3 +66,16 @@ To keep them permanently, either:
 2. In AdSense, create **Display ad units** (manual ads) and paste each unit's code into the "AD SPOT 1/2/3" boxes in `public/index.html`.
 3. Keep **Auto ads OFF** in AdSense for this site. Auto ads would also place ads inside the chat room, which is risky because you're responsible for every message shown next to ads.
 4. The ad spots are hidden automatically while someone is in the chat room.
+
+## SEO (search: "Pakistani chat room")
+Already set up:
+- Home page title, description and main heading target "Pakistani chat room"
+- FAQ section with structured data, plus WebSite structured data
+- 5 extra pages: /urdu-chat-room, /karachi-chat-room, /lahore-chat-room, /islamabad-chat-room, /uk-pakistani-chat-room
+- robots.txt and sitemap.xml (public/), share image (public/og-image.png), 404 page
+If your domain isn't mehfilchat.com, replace "https://mehfilchat.com" in public/index.html, the 5 page folders, robots.txt and sitemap.xml.
+
+After deploying:
+1. Add the site to Google Search Console (search.google.com/search-console), verify with a DNS TXT record in Namecheap.
+2. Submit https://mehfilchat.com/sitemap.xml under Sitemaps.
+3. Use "URL inspection" → "Request indexing" for the home page.
