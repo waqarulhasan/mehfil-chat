@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- AdSense: paste the AdSense <script async src="https://pagead2.googlesyndication.com/..."> line from your AdSense account here.
+     In AdSense, keep Auto ads OFF for this site so ads never appear inside the chat room. -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mehfil Chat | Free Pakistani Chat Room, No Registration</title>
+<meta name="description" content="Mehfil Chat is a free Pakistani chat room with no registration. Pick a nickname and chat live with people from Pakistan, the UK, USA, UAE and around the world.">
+<meta name="theme-color" content="#0B3D2E">
+<meta property="og:title" content="Mehfil Chat | Free Pakistani Chat Room">
+<meta property="og:description" content="No registration. Pick a nickname and join the mehfil.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23FFC93C'/%3E%3Ctext x='32' y='46' font-family='Arial' font-weight='900' font-size='40' text-anchor='middle' fill='%230B3D2E'%3EM%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito+Sans:wght@400;600;700&family=Noto+Nastaliq+Urdu:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--sabz:#0B3D2E;--sabz2:#12573F;--pink:#E4007C;--haldi:#FFC93C;--ink:#1C2421;--mist:#EEF3F0;--line:#D5DFDA;--muted:#5B6B64;--white:#fff}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;font:400 16px/1.55 "Nunito Sans",system-ui,sans-serif;color:var(--ink);background:var(--white)}
+h1,h2,h3{font-family:"Baloo 2",sans-serif;line-height:1.05;margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--haldi);outline-offset:2px}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+button{font:inherit;cursor:pointer}
+/* truck-art border strip */
+.strip{height:18px;background:
+  radial-gradient(circle at 9px 0,var(--pink) 7px,transparent 7.5px) 0 0/18px 18px,
+  radial-gradient(circle at 9px 18px,var(--haldi) 7px,transparent 7.5px) 9px 0/18px 18px,
+  var(--sabz)}
+/* ===== Landing ===== */
+.land header{background:var(--sabz);color:#fff}
+.land header .wrap{display:flex;justify-content:space-between;align-items:center;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font:800 26px/1 "Baloo 2",sans-serif;text-decoration:none}
+.brand i{width:34px;height:34px;border-radius:10px 10px 10px 2px;background:var(--haldi);display:grid;place-items:center;font-style:normal;color:var(--sabz);font-size:20px}
+.pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border-radius:99px;padding:6px 14px;font-weight:700;font-size:15px}
+.dot{width:9px;height:9px;border-radius:50%;background:#3DDC84;box-shadow:0 0 0 0 rgba(61,220,132,.6);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(61,220,132,0)}100%{box-shadow:0 0 0 0 rgba(61,220,132,0)}}
+.hero{background:var(--sabz);color:#fff;padding:56px 0 72px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:48px;align-items:center}
+.hero h1{font-size:clamp(46px,7vw,78px);font-weight:800}
+.urdu{font-family:"Noto Nastaliq Urdu",serif;font-size:28px;color:var(--haldi);display:block;margin:6px 0 14px;line-height:2}
+.hero p{font-size:20px;max-width:34ch;color:#D7E6DF;margin:0 0 22px}
+.ticks{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:10px}
+.ticks li{background:rgba(255,255,255,.1);border-radius:8px;padding:6px 12px;font-weight:600}
+.joincard{background:#fff;color:var(--ink);border-radius:18px;padding:28px;position:relative;box-shadow:0 0 0 6px var(--haldi),0 0 0 12px var(--pink),0 24px 50px rgba(0,0,0,.35)}
+.joincard h2{font-size:32px}
+.joincard .sub{color:var(--muted);margin:2px 0 18px}
+label{font-weight:700;display:block;margin-bottom:6px}
+.nick{width:100%;font:700 20px "Nunito Sans",sans-serif;padding:14px 16px;border:2px solid var(--line);border-radius:12px}
+.nick:focus{border-color:var(--sabz);outline:3px solid var(--haldi)}
+.check{display:flex;gap:10px;align-items:flex-start;margin:16px 0;font-size:15px;color:var(--muted)}
+.check input{width:20px;height:20px;accent-color:var(--sabz);margin-top:2px;flex:none}
+.go{width:100%;border:0;border-radius:12px;background:var(--pink);color:#fff;font:800 22px "Baloo 2",sans-serif;padding:14px;transition:transform .12s,background .12s}
+.go:hover{background:#C9006D}.go:active{transform:scale(.98)}
+.go:disabled{opacity:.6;cursor:wait}
+.err{color:#C92A2A;font-weight:700;font-size:14px;min-height:20px;margin-top:10px}
+.joincard .small{font-size:13px;color:var(--muted);margin:10px 0 0}
+.pill{white-space:nowrap}
+@media (max-width:520px){.chat header .brand{font-size:0;gap:0}.chat header .bar{gap:8px;padding:10px}.hbtn{padding:8px 10px}}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr;gap:36px}.hero{padding-top:36px}}
+section.info{padding:72px 0}
+section.info h2{font-size:clamp(32px,4.5vw,44px);margin-bottom:22px}
+.steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;counter-reset:s}
+.steps li{counter-increment:s;background:var(--mist);border-radius:14px;padding:22px}
+.steps li::before{content:counter(s);display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--sabz);color:var(--haldi);font:800 22px "Baloo 2",sans-serif;margin-bottom:12px}
+.steps h3{font-size:22px;margin-bottom:4px}
+.steps p{margin:0;color:var(--muted)}
+.rules{columns:2;gap:40px;padding-left:20px;margin:0}
+.rules li{margin-bottom:10px;break-inside:avoid}
+.about p{max-width:70ch;color:var(--muted)}
+@media (max-width:760px){.steps{grid-template-columns:1fr}.rules{columns:1}}
+.land footer{background:var(--sabz);color:#BFD3CA;padding:28px 0;font-size:14px}
+.land footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+/* ===== Chat ===== */
+.chat{display:none;height:100%;flex-direction:column;background:var(--mist)}
+body.inchat .land{display:none}
+body.inchat .chat{display:flex}
+.chat header{background:var(--sabz);color:#fff;flex:none}
+.chat header .bar{display:flex;align-items:center;gap:14px;padding:10px 16px;max-width:1200px;margin:0 auto}
+.chat header .brand{font-size:22px}
+.chat header .brand i{width:30px;height:30px;font-size:17px}
+.room{font-weight:700;opacity:.9}
+.spacer{flex:1}
+.hbtn{background:rgba(255,255,255,.12);color:#fff;border:0;border-radius:10px;padding:8px 12px;font-weight:700;font-size:14px}
+.hbtn:hover{background:rgba(255,255,255,.22)}
+.body{flex:1;display:flex;min-height:0;max-width:1200px;width:100%;margin:0 auto}
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.msgs{flex:1;overflow-y:auto;padding:18px 16px 8px;display:flex;flex-direction:column;gap:6px}
+.m{max-width:min(78%,560px);background:#fff;border-radius:4px 16px 16px 16px;padding:8px 12px 6px;box-shadow:0 1px 0 rgba(0,0,0,.06);align-self:flex-start;animation:pop .18s ease-out}
+.m.me{align-self:flex-end;background:#D3F4E4;border-radius:16px 4px 16px 16px}
+.m .n{font-weight:800;font-size:14px;background:none;border:0;padding:0;cursor:pointer}
+.m .n:hover{text-decoration:underline}
+.m.me .n{cursor:default;text-decoration:none!important}
+.m .t{white-space:pre-wrap;word-wrap:break-word;overflow-wrap:anywhere;font-size:16px}
+.m .tm{font-size:11px;color:var(--muted);text-align:right}
+.m.same{margin-top:-2px}
+.sys{align-self:center;font-size:13px;color:var(--muted);background:rgba(11,61,46,.07);border-radius:99px;padding:3px 12px;margin:4px 0}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.emo{display:flex;gap:4px;padding:6px 12px 0;overflow-x:auto;flex:none}
+.emo button{border:0;background:none;font-size:22px;padding:2px 6px;border-radius:8px}
+.emo button:hover{background:#fff}
+.composer{display:flex;gap:10px;padding:10px 12px calc(12px + env(safe-area-inset-bottom));flex:none}
+.composer textarea{flex:1;resize:none;font:inherit;font-size:16px;border:2px solid var(--line);border-radius:14px;padding:11px 14px;max-height:120px;background:#fff}
+.composer textarea:focus{border-color:var(--sabz);outline:none}
+.send{border:0;border-radius:14px;background:var(--pink);color:#fff;font:800 18px "Baloo 2",sans-serif;padding:0 20px}
+.send:hover{background:#C9006D}
+.note{font-size:13px;color:#C92A2A;font-weight:700;padding:0 16px;min-height:0}
+.side{width:290px;flex:none;border-left:1px solid var(--line);background:#fff;display:flex;flex-direction:column}
+.side h3{font-size:20px;padding:14px 16px 6px}
+.ul{list-style:none;margin:0;padding:4px 8px 16px;overflow-y:auto}
+.ul li{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:8px}
+.ul li:hover{background:var(--mist)}
+.av{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:13px;flex:none}
+.ul .nm{flex:1;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ul .mute{border:1px solid var(--line);background:#fff;border-radius:6px;font-size:12px;padding:3px 7px}
+.ul .you{font-size:12px;color:var(--muted)}
+.ul li.muted .nm{opacity:.45;text-decoration:line-through}
+.conn{font-size:13px;color:var(--muted);text-align:center;padding:4px}
+.conn.bad{color:#C92A2A;font-weight:700}
+@media (max-width:820px){
+  .side{position:fixed;top:0;right:0;bottom:0;width:min(300px,86vw);z-index:40;transform:translateX(100%);transition:transform .25s;box-shadow:-10px 0 30px rgba(0,0,0,.2)}
+  .side.open{transform:none}
+  .room{display:none}
+}
+@media (min-width:821px){.peopleBtn{display:none}}
+.scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:35}
+.scrim.show{display:block}
+dialog{border:0;border-radius:16px;padding:24px;max-width:440px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+dialog h3{font-size:26px;margin-bottom:8px}
+dialog ul{padding-left:20px;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.adminlink{background:none;border:0;color:var(--muted);font-size:13px;text-decoration:underline;padding:6px 0 0}
+.adminbox{margin-top:14px}
+.badge{display:inline-block;background:var(--sabz);color:var(--haldi);font:800 10px/1 "Nunito Sans",sans-serif;padding:3px 6px;border-radius:5px;margin-left:6px;vertical-align:2px;letter-spacing:.02em}
+.m.adm{border-left:3px solid var(--sabz)}
+.m .del{float:right;margin:-2px -4px 0 10px;border:0;background:none;color:var(--muted);font-size:12px;padding:2px 4px;border-radius:4px;opacity:0}
+.m:hover .del,.m .del:focus{opacity:1}
+@media (hover:none){.m .del{opacity:.7}}
+.m .del:hover{background:var(--mist);color:#C92A2A}
+.ul .acts{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+.ul li{flex-wrap:wrap}
+.ul .kick,.ul .ban{border:1px solid var(--line);background:#fff;border-radius:6px;font-size:12px;padding:3px 7px}
+.ul .ban{color:#C92A2A;border-color:#F1B5B5}
+.join-gap{margin-top:16px}
+
+.mdesc{color:var(--muted);font-size:14px;margin:0 0 12px}
+.modlist{list-style:none;padding:0!important;margin:0 0 16px;border-top:1px solid var(--line)}
+.modlist li{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:1px solid var(--line);color:var(--ink);font-weight:700}
+.modlist li small{font-weight:400;color:var(--muted)}
+.modlist .rm{border:1px solid #F1B5B5;color:#C92A2A;background:#fff;border-radius:6px;font-size:12px;padding:3px 8px}
+.modlist .empty{color:var(--muted);font-weight:400}
+.addmod label{margin-top:10px;font-size:14px}
+.addmod .nick{font-size:16px;padding:10px 12px}
+.hint{font-weight:400;color:var(--muted);font-size:13px}
+.addmod .go{margin-top:6px;font-size:18px;padding:10px}
+.closex{width:100%;margin-top:10px;background:none;border:1px solid var(--line);border-radius:10px;padding:9px;font-weight:700}
+#modsDlg{width:min(440px,92vw)}
+
+/* Ad spots (landing page only) */
+.adwrap{max-width:1100px;margin:0 auto;padding:24px 20px}
+.ad{min-height:100px;display:flex;align-items:center;justify-content:center;border:2px dashed var(--line);border-radius:12px;color:var(--muted);font-size:14px;overflow:hidden}
+.ad:has(ins){border:0;min-height:0}
+body.inchat .adwrap{display:none}
+</style>
+</head>
+<body>
+
+<div class="land">
+  <header><div class="wrap">
+    <a class="brand" href="/"><i>M</i>Mehfil Chat</a>
+    <span class="pill"><span class="dot"></span><span id="countTop">Live now</span></span>
+  </div></header>
+
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Free chat room. No registration.</h1>
+        <span class="urdu" lang="ur" dir="rtl">آئیں، محفل سجائیں</span>
+        <p>Pick a nickname and start chatting with people from Pakistan and around the world. No email, no password, no app.</p>
+        <ul class="ticks"><li>100% free</li><li>Works on mobile</li><li>Join in 5 seconds</li><li>Moderated</li></ul>
+      </div>
+      <form class="joincard" id="joinForm" novalidate>
+        <h2>Join the chat</h2>
+        <p class="sub" id="countCard">Choose a nickname to get started.</p>
+        <label for="nick">Your nickname</label>
+        <input class="nick" id="nick" maxlength="18" autocomplete="off" placeholder="e.g. Ali_Lahore" required>
+        <div class="adminbox" id="adminBox" hidden>
+          <label for="adminPass">Admin or moderator password</label>
+          <input class="nick" id="adminPass" type="password" autocomplete="current-password">
+        </div>
+        <button class="go join-gap" id="goBtn" type="submit">Start chatting</button>
+        <div class="err" id="joinErr" role="alert"></div>
+        <p class="small">By joining you agree to the <a href="#rules">chat rules</a>. Messages aren't saved after the server restarts.</p>
+        <button type="button" class="adminlink" id="adminToggle">Admin / moderator login</button>
+      </form>
+    </div>
+  </section>
+  <div class="strip" aria-hidden="true"></div>
+  <!-- AD SPOT 1: below the hero, wide banner
+       Paste your AdSense ad unit code inside the div below, replacing the "Ad space" text.
+       This area is only on the landing page and is hidden when someone is in the chat room. -->
+  <div class="adwrap"><div class="ad" data-ad="1"><span>Ad space 1</span></div></div>
+
+  <section class="info"><div class="wrap">
+    <h2>How to join</h2>
+    <ol class="steps">
+      <li><h3>Type a nickname</h3><p>Any name you like, 2 to 18 characters. No real name needed.</p></li>
+      <li><h3>Tap Start chatting</h3><p>No email, password or app download.</p></li>
+      <li><h3>Say hello</h3><p>You're in the room straight away with everyone online.</p></li>
+    </ol>
+  </div></section>
+
+  <!-- AD SPOT 2: between "How to join" and "Chat rules"
+       Paste your AdSense ad unit code inside the div below, replacing the "Ad space" text.
+       This area is only on the landing page and is hidden when someone is in the chat room. -->
+  <div class="adwrap"><div class="ad" data-ad="2"><span>Ad space 2</span></div></div>
+  <section class="info" id="rules" style="background:var(--mist)"><div class="wrap">
+    <h2>Chat rules</h2>
+    <ul class="rules" id="rulesList">
+      <li>Be respectful. No abuse, threats or hate speech.</li>
+      <li>Don't share your phone number, address or other personal details.</li>
+      <li>No spam, adverts or repeated messages.</li>
+      <li>No adult content. This is a public room.</li>
+      <li>If someone bothers you, tap their name and choose Mute.</li>
+      <li>Admins can remove or ban anyone who breaks the rules.</li>
+    </ul>
+  </div></section>
+
+  <section class="info about"><div class="wrap">
+    <h2>A mehfil for everyone</h2>
+    <p>Mehfil Chat is a free online chat room for people in Pakistan and Pakistanis living abroad in the UK, USA, Canada, UAE and Saudi Arabia. There's no sign-up: open the page, pick a nickname and talk in Urdu, Punjabi or English with whoever is online.</p>
+  </div></section>
+
+  <!-- AD SPOT 3: above the footer
+       Paste your AdSense ad unit code inside the div below, replacing the "Ad space" text.
+       This area is only on the landing page and is hidden when someone is in the chat room. -->
+  <div class="adwrap"><div class="ad" data-ad="3"><span>Ad space 3</span></div></div>
+  <footer><div class="wrap"><span>© <span class="yr"></span> Mehfil Chat</span><span>Demo project</span></div></footer>
+</div>
+
+<div class="chat" aria-label="Chat room">
+  <header><div class="bar">
+    <span class="brand"><i>M</i>Mehfil</span>
+    <span class="room">Main room</span>
+    <span class="pill"><span class="dot"></span><span id="countChat">1 online</span></span>
+    <span class="spacer"></span>
+    <button class="hbtn" id="modsBtn" type="button" hidden>Moderators</button>
+    <button class="hbtn" id="clearBtn" type="button" hidden>Clear chat</button>
+    <button class="hbtn" id="rulesBtn" type="button">Rules</button>
+    <button class="hbtn peopleBtn" id="peopleBtn" type="button">People</button>
+    <button class="hbtn" id="leaveBtn" type="button">Leave</button>
+  </div></header>
+  <div class="body">
+    <div class="main">
+      <div class="conn" id="conn">Connecting…</div>
+      <div class="msgs" id="msgs" aria-live="polite"></div>
+      <div class="note" id="note" role="alert"></div>
+      <div class="emo" id="emo" aria-label="Quick emoji"></div>
+      <form class="composer" id="sendForm">
+        <textarea id="text" rows="1" maxlength="400" placeholder="Type a message…" aria-label="Message"></textarea>
+        <button class="send" type="submit">Send</button>
+      </form>
+    </div>
+    <aside class="side" id="side" aria-label="People online">
+      <h3>People online</h3>
+      <ul class="ul" id="people"></ul>
+    </aside>
+  </div>
+</div>
+<div class="scrim" id="scrim"></div>
+
+<dialog id="modsDlg">
+  <h3>Moderators</h3>
+  <p class="mdesc">Moderators log in with their own nickname and password using "Admin / moderator login". They can delete messages, kick, ban and clear the chat.</p>
+  <ul class="modlist" id="modList"></ul>
+  <form id="addMod" class="addmod">
+    <label for="modName">Nickname</label><input class="nick" id="modName" maxlength="18" autocomplete="off">
+    <label for="modPass">Password <span class="hint">at least 6 characters</span></label><input class="nick" id="modPass" type="text" autocomplete="off">
+    <div class="err" id="modErr" role="alert"></div>
+    <button class="go" type="submit">Add moderator</button>
+  </form>
+  <button class="closex" type="button" onclick="this.closest('dialog').close()">Close</button>
+</dialog>
+<dialog id="rulesDlg"><h3>Chat rules</h3><ul id="rulesCopy"></ul><button class="go" type="button" onclick="this.closest('dialog').close()">Got it</button></dialog>
+
+<script>
+const $=s=>document.querySelector(s);
+document.querySelectorAll('.yr').forEach(e=>e.textContent=new Date().getFullYear());
+$('#rulesCopy').innerHTML=$('#rulesList').innerHTML;
+let me=null, es=null, muted=new Set(JSON.parse(sessionStorageGet('muted')||'[]')), lastFrom=null;
+function sessionStorageGet(k){try{return sessionStorage.getItem(k)}catch(e){return null}}
+function sessionStorageSet(k,v){try{sessionStorage.setItem(k,v)}catch(e){}}
+
+// ---- Join ----
+try{const n=localStorage.getItem('nick');if(n)$('#nick').value=n}catch(e){}
+$('#joinForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const nick=$('#nick').value.trim(), adminPass=$('#adminBox').hidden?'':$('#adminPass').value, err=$('#joinErr');
+  err.textContent='';
+  if(nick.length<2){err.textContent='Enter a nickname with at least 2 characters.';$('#nick').focus();return}
+  if(!$('#adminBox').hidden&&!adminPass){err.textContent='Enter the admin password, or close admin login.';$('#adminPass').focus();return}
+  $('#goBtn').disabled=true;$('#goBtn').textContent='Joining…';
+  try{
+    const r=await fetch('/api/join',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nick,adminPass})});
+    const d=await r.json();
+    if(!r.ok){err.textContent=d.error||'Could not join. Try again.';return}
+    me=d; $('#adminPass').value=''; sessionStorageSet('me',JSON.stringify(d));
+    try{localStorage.setItem('nick',nick)}catch(e){}
+    enterChat();
+  }catch(x){err.textContent='Could not reach the chat server. Check your connection and try again.'}
+  finally{$('#goBtn').disabled=false;$('#goBtn').textContent='Start chatting'}
+});
+
+// Show how many people are online
+(async function count(){try{const r=await fetch('/api/count');const d=await r.json();const t=d.online===1?'1 person online':d.online+' people online';$('#countTop').textContent=t;$('#countCard').textContent=d.online?t+' right now. Choose a nickname to join.':'Be the first one in. Choose a nickname to join.'}catch(e){}if(!document.body.classList.contains('inchat'))setTimeout(count,15000)})();
+
+$('#adminToggle').onclick=()=>{const b=$('#adminBox');b.hidden=!b.hidden;$('#adminToggle').textContent=b.hidden?'Admin / moderator login':'Close admin login';if(!b.hidden)$('#adminPass').focus()};
+
+// Rejoin after page refresh
+(function(){const s=sessionStorageGet('me');if(s){try{me=JSON.parse(s);enterChat()}catch(e){}}})();
+
+function enterChat(){
+  document.body.classList.add('inchat');
+  $('#clearBtn').hidden=!me.admin;
+  $('#modsBtn').hidden=!me.owner;
+  $('#msgs').innerHTML='';
+  connect();
+  setTimeout(()=>$('#text').focus(),50);
+}
+function connect(){
+  if(es)es.close();
+  es=new EventSource('/api/stream?id='+me.id+'&token='+me.token);
+  es.addEventListener('hello',e=>{const d=JSON.parse(e.data);$('#msgs').innerHTML='';lastFrom=null;d.history.forEach(add);renderPeople(d.online);setConn(true);scrollDown(true)});
+  es.addEventListener('msg',e=>{add(JSON.parse(e.data));scrollDown()});
+  es.addEventListener('online',e=>renderPeople(JSON.parse(e.data)));
+  es.addEventListener('delete',e=>{const id=JSON.parse(e.data).id;const el=document.querySelector('[data-mid="'+id+'"]');if(el)el.remove()});
+  es.addEventListener('clear',()=>{$('#msgs').innerHTML='';lastFrom=null});
+  es.addEventListener('role',e=>{const d=JSON.parse(e.data);me.admin=d.admin;sessionStorageSet('me',JSON.stringify(me));$('#clearBtn').hidden=!me.admin;
+    $('#note').textContent='';connect()});
+  es.addEventListener('kicked',e=>{const t=JSON.parse(e.data).text;es.close();backToStart(t)});
+  es.onerror=()=>{setConn(false);
+    // if our session expired, go back to the start screen
+    fetch('/api/check?id='+me.id+'&token='+me.token).then(r=>{if(r.status===401){es.close();backToStart('Your session ended. Join again to keep chatting.')}}).catch(()=>{});
+  };
+}
+function setConn(ok){const c=$('#conn');c.textContent=ok?'':'Reconnecting…';c.classList.toggle('bad',!ok);c.style.display=ok?'none':'block'}
+function backToStart(msg){
+  try{sessionStorage.removeItem('me')}catch(e){}
+  me=null;if(es)es.close();document.body.classList.remove('inchat');$('#joinErr').textContent=msg||'';
+}
+function fmt(t){return new Date(t).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}
+function add(m){
+  const box=$('#msgs');
+  if(m.type==='sys'){const d=document.createElement('div');d.className='sys';d.textContent=m.text;box.appendChild(d);lastFrom=null;return}
+  if(muted.has(m.from))return;
+  const mine=me&&m.from===me.id;
+  const d=document.createElement('div');d.className='m'+(mine?' me':'')+(m.admin?' adm':'')+(lastFrom===m.from?' same':'');d.dataset.mid=m.id;
+  if(me&&me.admin){const x=document.createElement('button');x.type='button';x.className='del';x.textContent='Delete';x.setAttribute('aria-label','Delete message');x.onclick=()=>admin('delete',{msgId:m.id});d.appendChild(x)}
+  if(lastFrom!==m.from){const n=document.createElement('button');n.type='button';n.className='n';n.style.color=m.color;n.textContent=mine?'You':m.nick;
+    if(m.admin){const bd=document.createElement('span');bd.className='badge';bd.textContent='ADMIN';n.appendChild(bd)}
+    if(!mine&&!m.admin)n.onclick=()=>{if(confirmMute(m.nick))mute(m.from)};d.appendChild(n)}
+  const t=document.createElement('div');t.className='t';t.textContent=m.text;d.appendChild(t);
+  const tm=document.createElement('div');tm.className='tm';tm.textContent=fmt(m.at);d.appendChild(tm);
+  box.appendChild(d);lastFrom=m.from;
+}
+function confirmMute(n){return window.confirm('Mute '+n+'? You won’t see their messages any more.')}
+function mute(id){muted.has(id)?muted.delete(id):muted.add(id);sessionStorageSet('muted',JSON.stringify([...muted]));
+  // re-render by reconnecting quickly from history
+  connect()}
+function scrollDown(force){const b=$('#msgs');const near=b.scrollHeight-b.scrollTop-b.clientHeight<160;if(force||near)b.scrollTop=b.scrollHeight}
+let peopleCache=[];
+function renderPeople(list){
+  peopleCache=list;
+  const n=list.length+' online';$('#countChat').textContent=n;
+  const ul=$('#people');ul.innerHTML='';
+  list.forEach(u=>{const li=document.createElement('li');if(muted.has(u.id))li.classList.add('muted');
+    const av=document.createElement('span');av.className='av';av.style.background=u.color;av.textContent=u.nick[0].toUpperCase();
+    const nm=document.createElement('span');nm.className='nm';nm.textContent=u.nick;
+    li.append(av,nm);
+    if(u.admin){const bd=document.createElement('span');bd.className='badge';bd.textContent='ADMIN';nm.appendChild(bd)}
+    if(me&&u.id===me.id){const y=document.createElement('span');y.className='you';y.textContent='you';li.append(y)}
+    else if(u.admin){if(me&&me.owner&&!u.owner){const a=document.createElement('span');a.className='acts';
+      const r=document.createElement('button');r.type='button';r.className='kick';r.textContent='Remove admin';r.onclick=()=>{if(confirm('Remove admin role from '+u.nick+'?'))admin('demote',{target:u.id})};a.append(r);li.append(a)}}
+    else if(me&&me.admin){const a=document.createElement('span');a.className='acts';
+      if(me.owner){const pm=document.createElement('button');pm.type='button';pm.className='kick';pm.textContent='Make admin';pm.onclick=()=>{if(confirm('Make '+u.nick+' an admin? They\u2019ll be able to delete messages, kick and ban.'))admin('promote',{target:u.id})};a.append(pm)}
+      const k=document.createElement('button');k.type='button';k.className='kick';k.textContent='Kick';k.onclick=()=>{if(confirm('Remove '+u.nick+' from the chat? They can join again.'))admin('kick',{target:u.id})};
+      const bn=document.createElement('button');bn.type='button';bn.className='ban';bn.textContent='Ban';bn.onclick=()=>{if(confirm('Ban '+u.nick+' for 24 hours? Their messages will be deleted.'))admin('ban',{target:u.id})};
+      a.append(k,bn);li.append(a)}
+    else{const b=document.createElement('button');b.type='button';b.className='mute';b.textContent=muted.has(u.id)?'Unmute':'Mute';b.onclick=()=>mute(u.id);li.append(b)}
+    ul.appendChild(li)});
+}
+
+// ---- Send ----
+const ta=$('#text');
+ta.addEventListener('input',()=>{ta.style.height='auto';ta.style.height=Math.min(ta.scrollHeight,120)+'px'});
+ta.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('#sendForm').requestSubmit()}});
+$('#sendForm').addEventListener('submit',async e=>{
+  e.preventDefault();const text=ta.value.trim();if(!text||!me)return;
+  ta.value='';ta.style.height='auto';$('#note').textContent='';
+  try{const r=await fetch('/api/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:me.id,token:me.token,text})});
+    if(!r.ok){const d=await r.json().catch(()=>({}));if(r.status===401)return backToStart('Your session ended. Join again to keep chatting.');$('#note').textContent=d.error||'Message not sent.';ta.value=text}
+  }catch(x){$('#note').textContent='Message not sent. Check your connection.';ta.value=text}
+  ta.focus();
+});
+['😀','😂','😍','👍','🙏','❤️','🔥','😎','🤣','😢','👋','🇵🇰','☕','🎉'].forEach(x=>{const b=document.createElement('button');b.type='button';b.textContent=x;b.setAttribute('aria-label','Add '+x);b.onclick=()=>{ta.value+=x;ta.focus()};$('#emo').appendChild(b)});
+
+// ---- Admin ----
+async function admin(action,extra){
+  try{const r=await fetch('/api/admin',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({id:me.id,token:me.token,action},extra||{}))});
+    if(!r.ok){const d=await r.json().catch(()=>({}));$('#note').textContent=d.error||'That didn\u2019t work.'}}
+  catch(e){$('#note').textContent='That didn\u2019t work. Check your connection.'}
+}
+async function mods(action,extra){
+  const r=await fetch('/api/mods',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({id:me.id,token:me.token,action},extra||{}))});
+  const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||'That didn\u2019t work.');return d;
+}
+function renderMods(list){
+  const ul=$('#modList');ul.innerHTML='';
+  if(!list.length){const li=document.createElement('li');li.className='empty';li.textContent='No moderators yet. Add one below.';ul.appendChild(li);return}
+  list.forEach(m=>{const li=document.createElement('li');const n=document.createElement('span');n.textContent=m.name+' ';
+    if(m.source==='env'){const sm=document.createElement('small');sm.textContent='(set in environment)';n.appendChild(sm);li.append(n)}
+    else{const b=document.createElement('button');b.type='button';b.className='rm';b.textContent='Remove';
+      b.onclick=async()=>{if(!confirm('Remove moderator '+m.name+'?'))return;try{renderMods((await mods('remove',{name:m.name})).mods)}catch(e){$('#modErr').textContent=e.message}};li.append(n,b)}
+    ul.appendChild(li)});
+}
+$('#modsBtn').onclick=async()=>{$('#modErr').textContent='';$('#modsDlg').showModal();try{renderMods((await mods('list')).mods)}catch(e){$('#modErr').textContent=e.message}};
+$('#addMod').addEventListener('submit',async e=>{e.preventDefault();$('#modErr').textContent='';
+  try{const d=await mods('add',{name:$('#modName').value.trim(),password:$('#modPass').value});renderMods(d.mods);$('#modName').value='';$('#modPass').value='';if(d.warning)$('#modErr').textContent=d.warning}
+  catch(x){$('#modErr').textContent=x.message}});
+$('#clearBtn').onclick=()=>{if(confirm('Clear the chat for everyone?'))admin('clear')};
+
+// ---- Header buttons ----
+$('#leaveBtn').onclick=()=>{if(me)navigator.sendBeacon('/api/leave',new Blob([JSON.stringify({id:me.id,token:me.token})],{type:'application/json'}));backToStart('')};
+$('#rulesBtn').onclick=()=>$('#rulesDlg').showModal();
+$('#peopleBtn').onclick=()=>{$('#side').classList.add('open');$('#scrim').classList.add('show')};
+$('#scrim').onclick=()=>{$('#side').classList.remove('open');$('#scrim').classList.remove('show')};
+</script>
+</body>
+</html>
