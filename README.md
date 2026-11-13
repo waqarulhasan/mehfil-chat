@@ -80,10 +80,9 @@ After deploying:
 3. Use "URL inspection" → "Request indexing" for the home page.
 
 ## Private messages
-- Tap someone's name in the chat (or "Message" in People online) to start a private chat. It opens as a tab next to "Main room", with an unread count.
-- Only the two people see private messages. They are kept in memory only (last 30 per pair, for reports) and are gone when either person leaves or the server restarts.
-- **Report** (inside a private chat): sends the recent private messages to all online admins, who can kick or ban from the report.
-- **Allow private messages** (People online panel): untick to stop anyone except admins messaging you privately.
+- Tap anyone's nickname (in the chat or in People online) to start a private chat. It opens as a tab next to "Main room", with an unread count.
+- Only the two people see private messages. They are kept in memory only and are gone when either person leaves or the server restarts.
+- **Mute** (inside a private chat): hides that person's messages everywhere and stops them messaging you privately. Tap Unmute to undo.
 
 ## Country flags
 Each person's country flag shows next to their nickname, worked out from their IP address with the free country.is service (no key needed, commercial use allowed). If that lookup fails, the browser's time zone is used instead.

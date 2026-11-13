@@ -45,7 +45,8 @@ const history = [];
 const bans = new Map();       // ip or nick -> expiry time
 const pmLog = new Map();      // 'idA|idB' -> last 30 private messages (memory only, for reports)
 const PM_KEEP = 30;
-const COLORS = ['#E4007C', '#0A8F6A', '#D9480F', '#5F3DC4', '#1971C2', '#C2255C', '#2B8A3E', '#E67700'];
+// softer name colours (still readable on white)
+const COLORS = ['#B9507A', '#2E8566', '#B8653A', '#6E5BB5', '#3B76B0', '#A85273', '#4A8752', '#A87A2A'];
 
 function send(res, event, data) { res.write(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`); }
 function broadcast(event, data) { for (const u of users.values()) if (u.res) send(u.res, event, data); }
@@ -135,7 +136,7 @@ const server = http.createServer(async (req, res) => {
       if ([...users.values()].some(u => u.nick.toLowerCase() === nick.toLowerCase())) return json(res, 409, { error: 'That nickname is taken. Try another one.' });
       const id = crypto.randomBytes(6).toString('hex');
       const token = crypto.randomBytes(16).toString('hex');
-      const u = { id, token, nick, color: admin ? '#0B3D2E' : COLORS[users.size % COLORS.length], res: null, sent: [], joined: false, admin, owner, ip, allowPM: true, blocks: new Set(), country: await countryOf(req, b) };
+      const u = { id, token, nick, color: admin ? '#2F5E50' : COLORS[users.size % COLORS.length], res: null, sent: [], joined: false, admin, owner, ip, allowPM: true, blocks: new Set(), country: await countryOf(req, b) };
       users.set(id, u);
       // forget people who join but never open the chat
       u.bye = setTimeout(() => { if (!u.res && !u.joined) users.delete(id); }, 30000);
