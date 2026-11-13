@@ -218,8 +218,47 @@ body.inchat .adwrap{display:none}
   .hbtn{padding:7px 9px;font-size:13px}
   #rulesBtn{display:none}
 }
+
+/* ===== Private chats ===== */
+.tabs{display:flex;gap:4px;padding:8px 10px 0;background:var(--mist);overflow-x:auto;flex:none;border-bottom:1px solid var(--line)}
+.tab{flex:none;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-bottom:0;background:#E3EAE6;color:var(--ink);font:700 14px/1 "Nunito Sans",sans-serif;padding:9px 12px;border-radius:10px 10px 0 0;cursor:pointer;max-width:200px}
+.tab .tn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tab.active{background:#fff;position:relative;top:1px}
+.tab .dot2{width:8px;height:8px;border-radius:50%;flex:none}
+.tab .ub{background:var(--pink);color:#fff;border-radius:99px;font-size:11px;padding:2px 6px;min-width:18px;text-align:center}
+.tab .x{border:0;background:none;font-size:16px;line-height:1;padding:0 0 0 2px;color:var(--muted);cursor:pointer}
+.tab .x:hover{color:#C92A2A}
+.tab.left .tn{opacity:.5;text-decoration:line-through}
+.pmbar{display:flex;align-items:center;gap:8px;padding:8px 14px;background:#FFF8E1;border-bottom:1px solid #F1E3B0;font-size:14px;flex:none}
+.pmbar[hidden]{display:none}
+.pmbtn{border:1px solid var(--line);background:#fff;border-radius:8px;font-size:13px;padding:5px 10px;font-weight:700}
+.pmbtn.warn{color:#C92A2A;border-color:#F1B5B5}
+#pmPanes{display:contents}
+.msgs[hidden]{display:none}
+.pmset{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--muted);padding:0 16px 8px;font-weight:600;margin:0}
+.pmset input{accent-color:var(--sabz);width:16px;height:16px}
+.ul .msg{border:1px solid var(--sabz);color:var(--sabz);background:#fff;border-radius:6px;font-size:12px;padding:3px 7px;font-weight:700}
+.ul .msg:disabled{opacity:.4;border-color:var(--line);color:var(--muted)}
+.umenu{position:fixed;z-index:60;background:#fff;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.2);padding:6px;min-width:170px}
+.umenu[hidden]{display:none}
+.umenu button{display:block;width:100%;text-align:left;border:0;background:none;padding:9px 12px;border-radius:7px;font-weight:700;font-size:14px}
+.umenu button:hover{background:var(--mist)}
+.umenu .uh{font-size:12px;color:var(--muted);padding:6px 12px 4px}
+.sys.report{background:#FFF0F0;color:#9C1C1C;font-style:normal;font-weight:700}
+.sys.report button{margin-left:8px;border:1px solid #F1B5B5;background:#fff;color:#9C1C1C;border-radius:6px;font-size:12px;padding:2px 8px;font-weight:700}
+.sys.pmintro{background:#FFFBEA;color:#6B5A1E}
+.replog{max-height:300px;overflow:auto;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:14px;margin-bottom:12px}
+.replog div{padding:4px 0;border-bottom:1px solid #EEF1EF}
+.replog div:last-child{border:0}
+.repacts{display:flex;gap:8px;margin-bottom:6px}
+.repacts button{flex:1;border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px;font-weight:700}
+.repacts .ban{color:#C92A2A;border-color:#F1B5B5}
+#reportDlg{width:min(460px,92vw)}
+
+.flag{width:20px;height:15px;border-radius:2px;margin-right:6px;vertical-align:-2px;box-shadow:0 0 0 1px rgba(0,0,0,.08);display:inline-block}
+.tab .flag{margin-right:4px}
 </style>
-<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "WebSite", "name": "Mehfil Chat", "alternateName": "Mehfil Chat – Pakistani Chat Room", "url": "https://mehfilchat.com/", "inLanguage": "en", "description": "Free Pakistani chat room with no registration."}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is Mehfil Chat a free Pakistani chat room?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Mehfil Chat is completely free. There are no paid plans, no coins and no hidden charges."}}, {"@type": "Question", "name": "Do I need to register or sign up?", "acceptedAnswer": {"@type": "Answer", "text": "No. There's no registration, email or password. Type a nickname, tap Start chatting and you're in the Pakistani chat room straight away."}}, {"@type": "Question", "name": "Can I chat in Urdu or Punjabi?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. You can chat in Urdu, Roman Urdu, Punjabi, English or any mix. Most people write in Roman Urdu, like on WhatsApp."}}, {"@type": "Question", "name": "Can overseas Pakistanis join?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Pakistanis in the UK, USA, Canada, UAE, Saudi Arabia and anywhere else can join the same chat room as people in Pakistan."}}, {"@type": "Question", "name": "Does Mehfil Chat work on mobile?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. It works in the browser on any Android phone or iPhone. There's no app to download."}}, {"@type": "Question", "name": "Is the chat moderated?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Admins and moderators can delete messages, remove people and ban anyone who breaks the chat rules. You can also mute anyone who bothers you."}}]}]</script>
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "WebSite", "name": "Mehfil Chat", "alternateName": "Mehfil Chat – Pakistani Chat Room", "url": "https://mehfilchat.com/", "inLanguage": "en", "description": "Free Pakistani chat room with no registration."}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is Mehfil Chat a free Pakistani chat room?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Mehfil Chat is completely free. There are no paid plans, no coins and no hidden charges."}}, {"@type": "Question", "name": "Do I need to register or sign up?", "acceptedAnswer": {"@type": "Answer", "text": "No. There's no registration, email or password. Type a nickname, tap Start chatting and you're in the Pakistani chat room straight away."}}, {"@type": "Question", "name": "Can I chat in Urdu or Punjabi?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. You can chat in Urdu, Roman Urdu, Punjabi, English or any mix. Most people write in Roman Urdu, like on WhatsApp."}}, {"@type": "Question", "name": "Can overseas Pakistanis join?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Pakistanis in the UK, USA, Canada, UAE, Saudi Arabia and anywhere else can join the same chat room as people in Pakistan."}}, {"@type": "Question", "name": "Does Mehfil Chat work on mobile?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. It works in the browser on any Android phone or iPhone. There's no app to download."}}, {"@type": "Question", "name": "Is the chat moderated?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Admins and moderators can delete messages, remove people and ban anyone who breaks the chat rules. You can report anyone who bothers you to the admins."}}]}]</script>
 </head>
 <body>
 
@@ -280,7 +319,8 @@ body.inchat .adwrap{display:none}
       <li>Don't share your phone number, address or other personal details.</li>
       <li>No spam, adverts or repeated messages.</li>
       <li>No adult content. This is a public room.</li>
-      <li>If someone bothers you, tap their name and choose Mute.</li>
+      <li>If someone bothers you in a private chat, tap Report to tell the admins, or turn off private messages in People online.</li>
+      <li>Private messages are only seen by you and the other person. Never share your phone number, address or photos.</li>
       <li>Admins can remove or ban anyone who breaks the rules.</li>
     </ul>
   </div></section>
@@ -303,7 +343,7 @@ body.inchat .adwrap{display:none}
     <details><summary>Can I chat in Urdu or Punjabi?</summary><p>Yes. You can chat in Urdu, Roman Urdu, Punjabi, English or any mix. Most people write in Roman Urdu, like on WhatsApp.</p></details>
     <details><summary>Can overseas Pakistanis join?</summary><p>Yes. Pakistanis in the UK, USA, Canada, UAE, Saudi Arabia and anywhere else can join the same chat room as people in Pakistan.</p></details>
     <details><summary>Does Mehfil Chat work on mobile?</summary><p>Yes. It works in the browser on any Android phone or iPhone. There's no app to download.</p></details>
-    <details><summary>Is the chat moderated?</summary><p>Yes. Admins and moderators can delete messages, remove people and ban anyone who breaks the chat rules. You can also mute anyone who bothers you.</p></details>
+    <details><summary>Is the chat moderated?</summary><p>Yes. Admins and moderators can delete messages, remove people and ban anyone who breaks the chat rules. You can report anyone who bothers you to the admins.</p></details>
   </div></section>
 
   <!-- AD SPOT 3: above the footer
@@ -328,8 +368,17 @@ body.inchat .adwrap{display:none}
   </div></header>
   <div class="body">
     <div class="main">
+      <div class="tabs" id="tabs" role="tablist" aria-label="Chats">
+        <button type="button" class="tab active" role="tab" data-tab="main" aria-selected="true">Main room</button>
+      </div>
+      <div class="pmbar" id="pmbar" hidden>
+        <span class="pmwith">Private chat with <b id="pmWith"></b></span>
+        <span class="spacer"></span>
+        <button type="button" class="pmbtn warn" id="pmReport">Report</button>
+      </div>
       <div class="conn" id="conn">Connecting…</div>
       <div class="msgs" id="msgs" aria-live="polite"></div>
+      <div id="pmPanes"></div>
       <div class="note" id="note" role="alert"></div>
       <div class="emo" id="emo" aria-label="Quick emoji"></div>
       <form class="composer" id="sendForm">
@@ -339,6 +388,7 @@ body.inchat .adwrap{display:none}
     </div>
     <aside class="side" id="side" aria-label="People online">
       <h3>People online</h3>
+      <label class="pmset"><input type="checkbox" id="allowPM" checked> Allow private messages</label>
       <ul class="ul" id="people"></ul>
     </aside>
   </div>
@@ -357,13 +407,26 @@ body.inchat .adwrap{display:none}
   </form>
   <button class="closex" type="button" onclick="this.closest('dialog').close()">Close</button>
 </dialog>
+<dialog id="reportDlg"><h3>Report</h3><p class="mdesc" id="reportInfo"></p><div class="replog" id="reportLog"></div>
+  <div class="repacts" id="reportActs"></div>
+  <button class="closex" type="button" onclick="this.closest('dialog').close()">Close</button></dialog>
+<div class="umenu" id="umenu" hidden role="menu"></div>
 <dialog id="rulesDlg"><h3>Chat rules</h3><ul id="rulesCopy"></ul><button class="go" type="button" onclick="this.closest('dialog').close()">Got it</button></dialog>
 
 <script>
 const $=s=>document.querySelector(s);
 document.querySelectorAll('.yr').forEach(e=>e.textContent=new Date().getFullYear());
 $('#rulesCopy').innerHTML=$('#rulesList').innerHTML;
-let me=null, es=null, muted=new Set(JSON.parse(sessionStorageGet('muted')||'[]')), lastFrom=null;
+let me=null, es=null, muted=new Set(), lastFrom=null;
+const TZ_CC={"Europe/Andorra":"AD","Asia/Dubai":"AE","Asia/Kabul":"AF","America/Antigua":"AG","America/Anguilla":"AI","Europe/Tirane":"AL","Asia/Yerevan":"AM","Africa/Luanda":"AO","Antarctica/McMurdo":"AQ","Antarctica/Casey":"AQ","Antarctica/Davis":"AQ","Antarctica/DumontDUrville":"AQ","Antarctica/Mawson":"AQ","Antarctica/Palmer":"AQ","Antarctica/Rothera":"AQ","Antarctica/Syowa":"AQ","Antarctica/Troll":"AQ","Antarctica/Vostok":"AQ","America/Argentina/Buenos_Aires":"AR","America/Argentina/Cordoba":"AR","America/Argentina/Salta":"AR","America/Argentina/Jujuy":"AR","America/Argentina/Tucuman":"AR","America/Argentina/Catamarca":"AR","America/Argentina/La_Rioja":"AR","America/Argentina/San_Juan":"AR","America/Argentina/Mendoza":"AR","America/Argentina/San_Luis":"AR","America/Argentina/Rio_Gallegos":"AR","America/Argentina/Ushuaia":"AR","Pacific/Pago_Pago":"AS","Europe/Vienna":"AT","Australia/Lord_Howe":"AU","Antarctica/Macquarie":"AU","Australia/Hobart":"AU","Australia/Melbourne":"AU","Australia/Sydney":"AU","Australia/Broken_Hill":"AU","Australia/Brisbane":"AU","Australia/Lindeman":"AU","Australia/Adelaide":"AU","Australia/Darwin":"AU","Australia/Perth":"AU","Australia/Eucla":"AU","America/Aruba":"AW","Europe/Mariehamn":"AX","Asia/Baku":"AZ","Europe/Sarajevo":"BA","America/Barbados":"BB","Asia/Dhaka":"BD","Europe/Brussels":"BE","Africa/Ouagadougou":"BF","Europe/Sofia":"BG","Asia/Bahrain":"BH","Africa/Bujumbura":"BI","Africa/Porto-Novo":"BJ","America/St_Barthelemy":"BL","Atlantic/Bermuda":"BM","Asia/Brunei":"BN","America/La_Paz":"BO","America/Kralendijk":"BQ","America/Noronha":"BR","America/Belem":"BR","America/Fortaleza":"BR","America/Recife":"BR","America/Araguaina":"BR","America/Maceio":"BR","America/Bahia":"BR","America/Sao_Paulo":"BR","America/Campo_Grande":"BR","America/Cuiaba":"BR","America/Santarem":"BR","America/Porto_Velho":"BR","America/Boa_Vista":"BR","America/Manaus":"BR","America/Eirunepe":"BR","America/Rio_Branco":"BR","America/Nassau":"BS","Asia/Thimphu":"BT","Africa/Gaborone":"BW","Europe/Minsk":"BY","America/Belize":"BZ","America/St_Johns":"CA","America/Halifax":"CA","America/Glace_Bay":"CA","America/Moncton":"CA","America/Goose_Bay":"CA","America/Blanc-Sablon":"CA","America/Toronto":"CA","America/Iqaluit":"CA","America/Atikokan":"CA","America/Winnipeg":"CA","America/Resolute":"CA","America/Rankin_Inlet":"CA","America/Regina":"CA","America/Swift_Current":"CA","America/Edmonton":"CA","America/Cambridge_Bay":"CA","America/Inuvik":"CA","America/Vancouver":"CA","America/Creston":"CA","America/Dawson_Creek":"CA","America/Fort_Nelson":"CA","America/Whitehorse":"CA","America/Dawson":"CA","Indian/Cocos":"CC","Africa/Kinshasa":"CD","Africa/Lubumbashi":"CD","Africa/Bangui":"CF","Africa/Brazzaville":"CG","Europe/Zurich":"CH","Africa/Abidjan":"CI","Pacific/Rarotonga":"CK","America/Santiago":"CL","America/Coyhaique":"CL","America/Punta_Arenas":"CL","Pacific/Easter":"CL","Africa/Douala":"CM","Asia/Shanghai":"CN","Asia/Urumqi":"CN","America/Bogota":"CO","America/Costa_Rica":"CR","America/Havana":"CU","Atlantic/Cape_Verde":"CV","America/Curacao":"CW","Indian/Christmas":"CX","Asia/Nicosia":"CY","Asia/Famagusta":"CY","Europe/Prague":"CZ","Europe/Berlin":"DE","Europe/Busingen":"DE","Africa/Djibouti":"DJ","Europe/Copenhagen":"DK","America/Dominica":"DM","America/Santo_Domingo":"DO","Africa/Algiers":"DZ","America/Guayaquil":"EC","Pacific/Galapagos":"EC","Europe/Tallinn":"EE","Africa/Cairo":"EG","Africa/El_Aaiun":"EH","Africa/Asmara":"ER","Europe/Madrid":"ES","Africa/Ceuta":"ES","Atlantic/Canary":"ES","Africa/Addis_Ababa":"ET","Europe/Helsinki":"FI","Pacific/Fiji":"FJ","Atlantic/Stanley":"FK","Pacific/Chuuk":"FM","Pacific/Pohnpei":"FM","Pacific/Kosrae":"FM","Atlantic/Faroe":"FO","Europe/Paris":"FR","Africa/Libreville":"GA","Europe/London":"GB","America/Grenada":"GD","Asia/Tbilisi":"GE","America/Cayenne":"GF","Europe/Guernsey":"GG","Africa/Accra":"GH","Europe/Gibraltar":"GI","America/Nuuk":"GL","America/Danmarkshavn":"GL","America/Scoresbysund":"GL","America/Thule":"GL","Africa/Banjul":"GM","Africa/Conakry":"GN","America/Guadeloupe":"GP","Africa/Malabo":"GQ","Europe/Athens":"GR","Atlantic/South_Georgia":"GS","America/Guatemala":"GT","Pacific/Guam":"GU","Africa/Bissau":"GW","America/Guyana":"GY","Asia/Hong_Kong":"HK","America/Tegucigalpa":"HN","Europe/Zagreb":"HR","America/Port-au-Prince":"HT","Europe/Budapest":"HU","Asia/Jakarta":"ID","Asia/Pontianak":"ID","Asia/Makassar":"ID","Asia/Jayapura":"ID","Europe/Dublin":"IE","Asia/Jerusalem":"IL","Europe/Isle_of_Man":"IM","Asia/Kolkata":"IN","Indian/Chagos":"IO","Asia/Baghdad":"IQ","Asia/Tehran":"IR","Atlantic/Reykjavik":"IS","Europe/Rome":"IT","Europe/Jersey":"JE","America/Jamaica":"JM","Asia/Amman":"JO","Asia/Tokyo":"JP","Africa/Nairobi":"KE","Asia/Bishkek":"KG","Asia/Phnom_Penh":"KH","Pacific/Tarawa":"KI","Pacific/Kanton":"KI","Pacific/Kiritimati":"KI","Indian/Comoro":"KM","America/St_Kitts":"KN","Asia/Pyongyang":"KP","Asia/Seoul":"KR","Asia/Kuwait":"KW","America/Cayman":"KY","Asia/Almaty":"KZ","Asia/Qyzylorda":"KZ","Asia/Qostanay":"KZ","Asia/Aqtobe":"KZ","Asia/Aqtau":"KZ","Asia/Atyrau":"KZ","Asia/Oral":"KZ","Asia/Vientiane":"LA","Asia/Beirut":"LB","America/St_Lucia":"LC","Europe/Vaduz":"LI","Asia/Colombo":"LK","Africa/Monrovia":"LR","Africa/Maseru":"LS","Europe/Vilnius":"LT","Europe/Luxembourg":"LU","Europe/Riga":"LV","Africa/Tripoli":"LY","Africa/Casablanca":"MA","Europe/Monaco":"MC","Europe/Chisinau":"MD","Europe/Podgorica":"ME","America/Marigot":"MF","Indian/Antananarivo":"MG","Pacific/Majuro":"MH","Pacific/Kwajalein":"MH","Europe/Skopje":"MK","Africa/Bamako":"ML","Asia/Yangon":"MM","Asia/Ulaanbaatar":"MN","Asia/Hovd":"MN","Asia/Macau":"MO","Pacific/Saipan":"MP","America/Martinique":"MQ","Africa/Nouakchott":"MR","America/Montserrat":"MS","Europe/Malta":"MT","Indian/Mauritius":"MU","Indian/Maldives":"MV","Africa/Blantyre":"MW","America/Mexico_City":"MX","America/Cancun":"MX","America/Merida":"MX","America/Monterrey":"MX","America/Matamoros":"MX","America/Chihuahua":"MX","America/Ciudad_Juarez":"MX","America/Ojinaga":"MX","America/Mazatlan":"MX","America/Bahia_Banderas":"MX","America/Hermosillo":"MX","America/Tijuana":"MX","Asia/Kuala_Lumpur":"MY","Asia/Kuching":"MY","Africa/Maputo":"MZ","Africa/Windhoek":"NA","Pacific/Noumea":"NC","Africa/Niamey":"NE","Pacific/Norfolk":"NF","Africa/Lagos":"NG","America/Managua":"NI","Europe/Amsterdam":"NL","Europe/Oslo":"NO","Asia/Kathmandu":"NP","Pacific/Nauru":"NR","Pacific/Niue":"NU","Pacific/Auckland":"NZ","Pacific/Chatham":"NZ","Asia/Muscat":"OM","America/Panama":"PA","America/Lima":"PE","Pacific/Tahiti":"PF","Pacific/Marquesas":"PF","Pacific/Gambier":"PF","Pacific/Port_Moresby":"PG","Pacific/Bougainville":"PG","Asia/Manila":"PH","Asia/Karachi":"PK","Europe/Warsaw":"PL","America/Miquelon":"PM","Pacific/Pitcairn":"PN","America/Puerto_Rico":"PR","Asia/Gaza":"PS","Asia/Hebron":"PS","Europe/Lisbon":"PT","Atlantic/Madeira":"PT","Atlantic/Azores":"PT","Pacific/Palau":"PW","America/Asuncion":"PY","Asia/Qatar":"QA","Indian/Reunion":"RE","Europe/Bucharest":"RO","Europe/Belgrade":"RS","Europe/Kaliningrad":"RU","Europe/Moscow":"RU","Europe/Simferopol":"UA","Europe/Kirov":"RU","Europe/Volgograd":"RU","Europe/Astrakhan":"RU","Europe/Saratov":"RU","Europe/Ulyanovsk":"RU","Europe/Samara":"RU","Asia/Yekaterinburg":"RU","Asia/Omsk":"RU","Asia/Novosibirsk":"RU","Asia/Barnaul":"RU","Asia/Tomsk":"RU","Asia/Novokuznetsk":"RU","Asia/Krasnoyarsk":"RU","Asia/Irkutsk":"RU","Asia/Chita":"RU","Asia/Yakutsk":"RU","Asia/Khandyga":"RU","Asia/Vladivostok":"RU","Asia/Ust-Nera":"RU","Asia/Magadan":"RU","Asia/Sakhalin":"RU","Asia/Srednekolymsk":"RU","Asia/Kamchatka":"RU","Asia/Anadyr":"RU","Africa/Kigali":"RW","Asia/Riyadh":"SA","Pacific/Guadalcanal":"SB","Indian/Mahe":"SC","Africa/Khartoum":"SD","Europe/Stockholm":"SE","Asia/Singapore":"SG","Atlantic/St_Helena":"SH","Europe/Ljubljana":"SI","Arctic/Longyearbyen":"SJ","Europe/Bratislava":"SK","Africa/Freetown":"SL","Europe/San_Marino":"SM","Africa/Dakar":"SN","Africa/Mogadishu":"SO","America/Paramaribo":"SR","Africa/Juba":"SS","Africa/Sao_Tome":"ST","America/El_Salvador":"SV","America/Lower_Princes":"SX","Asia/Damascus":"SY","Africa/Mbabane":"SZ","America/Grand_Turk":"TC","Africa/Ndjamena":"TD","Indian/Kerguelen":"TF","Africa/Lome":"TG","Asia/Bangkok":"TH","Asia/Dushanbe":"TJ","Pacific/Fakaofo":"TK","Asia/Dili":"TL","Asia/Ashgabat":"TM","Africa/Tunis":"TN","Pacific/Tongatapu":"TO","Europe/Istanbul":"TR","America/Port_of_Spain":"TT","Pacific/Funafuti":"TV","Asia/Taipei":"TW","Africa/Dar_es_Salaam":"TZ","Europe/Kyiv":"UA","Africa/Kampala":"UG","Pacific/Midway":"UM","Pacific/Wake":"UM","America/New_York":"US","America/Detroit":"US","America/Kentucky/Louisville":"US","America/Kentucky/Monticello":"US","America/Indiana/Indianapolis":"US","America/Indiana/Vincennes":"US","America/Indiana/Winamac":"US","America/Indiana/Marengo":"US","America/Indiana/Petersburg":"US","America/Indiana/Vevay":"US","America/Chicago":"US","America/Indiana/Tell_City":"US","America/Indiana/Knox":"US","America/Menominee":"US","America/North_Dakota/Center":"US","America/North_Dakota/New_Salem":"US","America/North_Dakota/Beulah":"US","America/Denver":"US","America/Boise":"US","America/Phoenix":"US","America/Los_Angeles":"US","America/Anchorage":"US","America/Juneau":"US","America/Sitka":"US","America/Metlakatla":"US","America/Yakutat":"US","America/Nome":"US","America/Adak":"US","Pacific/Honolulu":"US","America/Montevideo":"UY","Asia/Samarkand":"UZ","Asia/Tashkent":"UZ","Europe/Vatican":"VA","America/St_Vincent":"VC","America/Caracas":"VE","America/Tortola":"VG","America/St_Thomas":"VI","Asia/Ho_Chi_Minh":"VN","Pacific/Efate":"VU","Pacific/Wallis":"WF","Pacific/Apia":"WS","Asia/Aden":"YE","Indian/Mayotte":"YT","Africa/Johannesburg":"ZA","Africa/Lusaka":"ZM","Africa/Harare":"ZW","Asia/Calcutta":"IN","Asia/Katmandu":"NP","Asia/Rangoon":"MM","Asia/Saigon":"VN","Europe/Kiev":"UA","America/Buenos_Aires":"AR","Asia/Dacca":"BD","Asia/Istanbul":"TR","US/Eastern":"US","US/Central":"US","US/Mountain":"US","US/Pacific":"US","Canada/Eastern":"CA","Australia/Canberra":"AU","Europe/Belfast":"GB","GB":"GB"};
+function myCountry(){try{return TZ_CC[Intl.DateTimeFormat().resolvedOptions().timeZone]||''}catch(e){return ''}}
+let regionNames=null;try{regionNames=new Intl.DisplayNames(['en'],{type:'region'})}catch(e){}
+function flag(cc){
+  if(!cc||!/^[A-Z]{2}$/.test(cc))return null;
+  const i=document.createElement('img');i.className='flag';i.width=20;i.height=15;i.loading='lazy';
+  i.src='https://flagcdn.com/20x15/'+cc.toLowerCase()+'.png';i.srcset='https://flagcdn.com/40x30/'+cc.toLowerCase()+'.png 2x';
+  const name=regionNames?regionNames.of(cc):cc;i.alt=name;i.title=name;i.onerror=()=>i.remove();return i;
+}
 function sessionStorageGet(k){try{return sessionStorage.getItem(k)}catch(e){return null}}
 function sessionStorageSet(k,v){try{sessionStorage.setItem(k,v)}catch(e){}}
 
@@ -377,7 +440,7 @@ $('#joinForm').addEventListener('submit',async e=>{
   if(!$('#adminBox').hidden&&!adminPass){err.textContent='Enter the admin password, or close admin login.';$('#adminPass').focus();return}
   $('#goBtn').disabled=true;$('#goBtn').textContent='Joining…';
   try{
-    const r=await fetch('/api/join',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nick,adminPass})});
+    const r=await fetch('/api/join',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nick,adminPass,country:myCountry()})});
     const d=await r.json();
     if(!r.ok){err.textContent=d.error||'Could not join. Try again.';return}
     me=d; $('#adminPass').value=''; sessionStorageSet('me',JSON.stringify(d));
@@ -414,6 +477,9 @@ function connect(){
   es.addEventListener('online',e=>renderPeople(JSON.parse(e.data)));
   es.addEventListener('delete',e=>{const id=JSON.parse(e.data).id;const el=document.querySelector('[data-mid="'+id+'"]');if(el)el.remove()});
   es.addEventListener('clear',()=>{$('#msgs').innerHTML='';lastFrom=null});
+  es.addEventListener('pm',e=>onPM(JSON.parse(e.data)));
+  es.addEventListener('pmgone',e=>onPMGone(JSON.parse(e.data)));
+  es.addEventListener('report',e=>onReport(JSON.parse(e.data)));
   es.addEventListener('role',e=>{const d=JSON.parse(e.data);me.admin=d.admin;sessionStorageSet('me',JSON.stringify(me));$('#clearBtn').hidden=!me.admin;
     $('#note').textContent='';connect()});
   es.addEventListener('kicked',e=>{const t=JSON.parse(e.data).text;es.close();backToStart(t)});
@@ -424,6 +490,7 @@ function connect(){
 }
 function setConn(ok){const c=$('#conn');c.textContent=ok?'':'Reconnecting…';c.classList.toggle('bad',!ok);c.style.display=ok?'none':'block'}
 function backToStart(msg){
+  try{resetTabs()}catch(e){}
   try{sessionStorage.removeItem('me')}catch(e){}
   me=null;if(es)es.close();document.body.classList.remove('inchat');$('#joinErr').textContent=msg||'';
 }
@@ -431,9 +498,10 @@ function fmt(t){return new Date(t).toLocaleTimeString([], {hour:'2-digit',minute
 const pending=new Map(); // cid -> row element (my messages shown instantly)
 function row(m,mine){
   const d=document.createElement('div');d.className='m'+(mine?' me':'')+(m.admin?' adm':'');if(m.id)d.dataset.mid=m.id;
-  const n=document.createElement('button');n.type='button';n.className='n';n.style.color=m.color;n.textContent=m.nick;
+  const n=document.createElement('button');n.type='button';n.className='n';n.style.color=m.color;
+  const fl=flag(m.country);if(fl)n.appendChild(fl);n.appendChild(document.createTextNode(m.nick));
   if(m.admin){const bd=document.createElement('span');bd.className='badge';bd.textContent='ADMIN';n.appendChild(bd)}
-  if(!mine&&!m.admin)n.onclick=()=>{if(confirmMute(m.nick))mute(m.from)};
+  if(!mine)n.onclick=ev=>userMenu({id:m.from,nick:m.nick,color:m.color,admin:m.admin,country:m.country},ev);
   const ar=document.createElement('span');ar.className='ar';ar.textContent='→';ar.setAttribute('aria-hidden','true');
   const t=document.createElement('span');t.className='t';t.textContent=m.text;
   const tm=document.createElement('span');tm.className='tm';tm.textContent=fmt(m.at);
@@ -449,32 +517,127 @@ function add(m){
   if(mine&&m.cid&&pending.has(m.cid)){const el=pending.get(m.cid);pending.delete(m.cid);el.dataset.mid=m.id;el.classList.remove('sending');el.querySelector('.tm').textContent=fmt(m.at);return}
   box.appendChild(row(m,mine));
 }
-function confirmMute(n){return window.confirm('Mute '+n+'? You won’t see their messages any more.')}
-function mute(id){muted.has(id)?muted.delete(id):muted.add(id);sessionStorageSet('muted',JSON.stringify([...muted]));
+function confirmMute(n){return window.confirm('Block '+n+'? You won\u2019t see their messages and they can\u2019t message you privately.')}
+function mute(id){const on=!muted.has(id);on?muted.add(id):muted.delete(id);sessionStorageSet('muted',JSON.stringify([...muted]));
+  if(me)fetch('/api/block',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:me.id,token:me.token,target:id,on})}).catch(()=>{});
+  if(on&&tabs.has(id))closeTab(id);
   // re-render by reconnecting quickly from history
   connect()}
-function scrollDown(force){const b=$('#msgs');const near=b.scrollHeight-b.scrollTop-b.clientHeight<160;if(force||near)b.scrollTop=b.scrollHeight}
+function scrollDown(force){const b=typeof activePane==='function'?activePane():$('#msgs');const near=b.scrollHeight-b.scrollTop-b.clientHeight<160;if(force||near)b.scrollTop=b.scrollHeight}
 let peopleCache=[];
 function renderPeople(list){
   peopleCache=list;
-  const n=list.length+' online';$('#countChat').textContent=n;
+  $('#countChat').textContent=list.length+' online';
   const ul=$('#people');ul.innerHTML='';
   list.forEach(u=>{const li=document.createElement('li');if(muted.has(u.id))li.classList.add('muted');
     const av=document.createElement('span');av.className='av';av.style.background=u.color;av.textContent=u.nick[0].toUpperCase();
-    const nm=document.createElement('span');nm.className='nm';nm.textContent=u.nick;
+    const nm=document.createElement('span');nm.className='nm';const pf=flag(u.country);if(pf)nm.appendChild(pf);nm.appendChild(document.createTextNode(u.nick));
     li.append(av,nm);
     if(u.admin){const bd=document.createElement('span');bd.className='badge';bd.textContent='ADMIN';nm.appendChild(bd)}
-    if(me&&u.id===me.id){const y=document.createElement('span');y.className='you';y.textContent='you';li.append(y)}
-    else if(u.admin){if(me&&me.owner&&!u.owner){const a=document.createElement('span');a.className='acts';
-      const r=document.createElement('button');r.type='button';r.className='kick';r.textContent='Remove admin';r.onclick=()=>{if(confirm('Remove admin role from '+u.nick+'?'))admin('demote',{target:u.id})};a.append(r);li.append(a)}}
-    else if(me&&me.admin){const a=document.createElement('span');a.className='acts';
-      if(me.owner){const pm=document.createElement('button');pm.type='button';pm.className='kick';pm.textContent='Make admin';pm.onclick=()=>{if(confirm('Make '+u.nick+' an admin? They\u2019ll be able to delete messages, kick and ban.'))admin('promote',{target:u.id})};a.append(pm)}
-      const k=document.createElement('button');k.type='button';k.className='kick';k.textContent='Kick';k.onclick=()=>{if(confirm('Remove '+u.nick+' from the chat? They can join again.'))admin('kick',{target:u.id})};
-      const bn=document.createElement('button');bn.type='button';bn.className='ban';bn.textContent='Ban';bn.onclick=()=>{if(confirm('Ban '+u.nick+' for 24 hours? Their messages will be deleted.'))admin('ban',{target:u.id})};
-      a.append(k,bn);li.append(a)}
-    else{const b=document.createElement('button');b.type='button';b.className='mute';b.textContent=muted.has(u.id)?'Unmute':'Mute';b.onclick=()=>mute(u.id);li.append(b)}
-    ul.appendChild(li)});
+    if(me&&u.id===me.id){const y=document.createElement('span');y.className='you';y.textContent='you';li.append(y);ul.appendChild(li);return}
+    const a=document.createElement('span');a.className='acts';
+    const btn=(cls,txt,fn,title)=>{const b=document.createElement('button');b.type='button';b.className=cls;b.textContent=txt;b.onclick=fn;if(title)b.title=title;a.appendChild(b);return b};
+    const canPM=u.allowPM!==false||(me&&me.admin);
+    const mb=btn('msg','Message',()=>{openPM(u,true);closeSide()});
+    if(!canPM){mb.disabled=true;mb.title=u.nick+' has turned off private messages'}
+    if(me&&me.admin){
+      if(u.admin){if(me.owner&&!u.owner)btn('kick','Remove admin',()=>{if(confirm('Remove admin role from '+u.nick+'?'))admin('demote',{target:u.id})})}
+      else{
+        if(me.owner)btn('kick','Make admin',()=>{if(confirm('Make '+u.nick+' an admin? They’ll be able to delete messages, kick and ban.'))admin('promote',{target:u.id})});
+        btn('kick','Kick',()=>{if(confirm('Remove '+u.nick+' from the chat? They can join again.'))admin('kick',{target:u.id})});
+        btn('ban','Ban',()=>{if(confirm('Ban '+u.nick+' for 24 hours? Their messages will be deleted.'))admin('ban',{target:u.id})});
+      }
+    }
+    li.append(a);ul.appendChild(li)});
+  // mark tabs of people who left
+  tabs.forEach((t,id)=>{const here=list.some(u=>u.id===id);t.btn.classList.toggle('left',!here)});
 }
+function closeSide(){$('#side').classList.remove('open');$('#scrim').classList.remove('show')}
+
+// ---- Private chats ----
+let active='main';const tabs=new Map();
+function activePane(){return active==='main'?$('#msgs'):tabs.get(active).pane}
+function openPM(u,focus){
+  let t=tabs.get(u.id);
+  if(!t){
+    const pane=document.createElement('div');pane.className='msgs';pane.hidden=true;pane.setAttribute('aria-live','polite');
+    const intro=document.createElement('div');intro.className='sys pmintro';intro.textContent='Private chat with '+u.nick+'. Only you two can see these messages. Never share your phone number, address or photos.';pane.appendChild(intro);
+    $('#pmPanes').appendChild(pane);
+    const b=document.createElement('button');b.type='button';b.className='tab';b.setAttribute('role','tab');
+    const d=document.createElement('span');d.className='dot2';d.style.background=u.color;
+    const tn=document.createElement('span');tn.className='tn';const tf=flag(u.country);if(tf)tn.appendChild(tf);tn.appendChild(document.createTextNode(u.nick));
+    const ub=document.createElement('span');ub.className='ub';ub.hidden=true;
+    const x=document.createElement('button');x.type='button';x.className='x';x.textContent='×';x.setAttribute('aria-label','Close chat with '+u.nick);
+    x.onclick=e=>{e.stopPropagation();closeTab(u.id)};
+    b.append(d,tn,ub,x);b.onclick=()=>switchTab(u.id);$('#tabs').appendChild(b);
+    t={pane,btn:b,ub,nick:u.nick,color:u.color,unread:0};tabs.set(u.id,t);
+  }
+  if(focus)switchTab(u.id);
+  return t;
+}
+function switchTab(id){
+  if(id!=='main'&&!tabs.has(id))id='main';
+  active=id;
+  $('#msgs').hidden=id!=='main';
+  document.querySelectorAll('.tab').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false')});
+  const btn=id==='main'?document.querySelector('.tab[data-tab="main"]'):tabs.get(id).btn;btn.classList.add('active');btn.setAttribute('aria-selected','true');
+  tabs.forEach((t,k)=>t.pane.hidden=k!==id);
+  if(id!=='main'){const t=tabs.get(id);t.unread=0;t.ub.hidden=true;$('#pmWith').textContent=t.nick}
+  $('#pmbar').hidden=id==='main';
+  ta.placeholder=id==='main'?'Type a message…':'Message '+tabs.get(id).nick+' privately…';
+  $('#note').textContent='';scrollDown(true);ta.focus();updateTitle();
+}
+function closeTab(id){const t=tabs.get(id);if(!t)return;t.pane.remove();t.btn.remove();tabs.delete(id);if(active===id)switchTab('main');updateTitle()}
+function resetTabs(){[...tabs.keys()].forEach(closeTab);switchTab('main')}
+function updateTitle(){let n=0;tabs.forEach(t=>n+=t.unread);document.title=(n?'('+n+') ':'')+'Mehfil Chat'}
+function onPM(m){
+  const mine=me&&m.from===me.id;
+  const other=mine?{id:m.to,nick:m.toNick,color:m.toColor,admin:m.toAdmin,country:m.toCountry}:{id:m.from,nick:m.nick,color:m.color,admin:m.admin,country:m.country};
+  if(muted.has(other.id))return;
+  const t=openPM(other,false);
+  if(mine&&m.cid&&pending.has(m.cid)){const el=pending.get(m.cid);pending.delete(m.cid);el.dataset.mid=m.id;el.classList.remove('sending');el.querySelector('.tm').textContent=fmt(m.at);return}
+  const r=row(m,mine);r.querySelector('.del')?.remove();t.pane.appendChild(r);
+  if(active===other.id)scrollDown();else if(!mine){t.unread++;t.ub.textContent=t.unread;t.ub.hidden=false;updateTitle()}
+}
+function onPMGone(d){const t=tabs.get(d.id);if(!t)return;const s=document.createElement('div');s.className='sys';s.textContent=d.nick+' left the chat.';t.pane.appendChild(s);t.btn.classList.add('left');if(active===d.id)scrollDown()}
+$('.tab[data-tab="main"]').onclick=()=>switchTab('main');
+$('#pmReport').onclick=async()=>{const t=tabs.get(active);if(!t)return;
+  const reason=prompt('Report '+t.nick+' to the admins. What happened? (optional)');if(reason===null)return;
+  try{const r=await fetch('/api/report',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:me.id,token:me.token,target:active,reason})});const d=await r.json();
+    $('#note').textContent=d.admins?'Report sent to '+d.admins+' admin'+(d.admins>1?'s':'')+'. You can close this chat with the \u00d7 on its tab.':'No admins are online right now. Close this chat with the \u00d7 on its tab, or turn off private messages in People online.'}
+  catch(e){$('#note').textContent='Report not sent. Check your connection.'}};
+$('#allowPM').onchange=e=>{if(me)fetch('/api/settings',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:me.id,token:me.token,allowPM:e.target.checked})}).catch(()=>{})};
+// reports arriving for admins
+function onReport(r){
+  const s=document.createElement('div');s.className='sys report';s.textContent='⚠ '+r.by+' reported '+r.target;
+  const b=document.createElement('button');b.type='button';b.textContent='View';b.onclick=()=>showReport(r);s.appendChild(b);
+  $('#msgs').appendChild(s);if(active==='main')scrollDown();
+}
+function showReport(r){
+  $('#reportInfo').textContent=r.by+' reported '+r.target+(r.reason?': “'+r.reason+'”':'.')+' Their last private messages:';
+  const log=$('#reportLog');log.innerHTML='';
+  if(!r.lines.length){log.textContent='No private messages between them.'}
+  r.lines.forEach(l=>{const d=document.createElement('div');const b=document.createElement('b');b.textContent=l.nick+': ';d.append(b,document.createTextNode(l.text));log.appendChild(d)});
+  const acts=$('#reportActs');acts.innerHTML='';
+  if(r.targetId&&peopleCache.some(u=>u.id===r.targetId)){
+    const k=document.createElement('button');k.type='button';k.textContent='Kick '+r.target;k.onclick=()=>{admin('kick',{target:r.targetId});$('#reportDlg').close()};
+    const bn=document.createElement('button');bn.type='button';bn.className='ban';bn.textContent='Ban 24h';bn.onclick=()=>{admin('ban',{target:r.targetId});$('#reportDlg').close()};
+    acts.append(k,bn)}
+  $('#reportDlg').showModal();
+}
+// small menu when tapping a name
+function userMenu(u,ev){
+  ev.stopPropagation();const m=$('#umenu');m.innerHTML='';
+  const h=document.createElement('div');h.className='uh';h.textContent=u.nick;m.appendChild(h);
+  const live=peopleCache.find(p=>p.id===u.id);
+  const add=(txt,fn)=>{const b=document.createElement('button');b.type='button';b.textContent=txt;b.onclick=()=>{m.hidden=true;fn()};m.appendChild(b)};
+  if(live&&(live.allowPM!==false||me.admin))add('Private message',()=>openPM(live,true));
+  else if(!live){const d=document.createElement('div');d.className='uh';d.textContent='Has left the chat';m.appendChild(d)}
+  else{const d=document.createElement('div');d.className='uh';d.textContent='Private messages turned off';m.appendChild(d)}
+  m.hidden=false;const r=ev.target.getBoundingClientRect();
+  m.style.left=Math.min(r.left,innerWidth-190)+'px';m.style.top=Math.min(r.bottom+4,innerHeight-m.offsetHeight-8)+'px';
+}
+document.addEventListener('click',e=>{const m=$('#umenu');if(!m.hidden&&!m.contains(e.target))m.hidden=true});
 
 // ---- Send ----
 const ta=$('#text');
@@ -485,15 +648,16 @@ $('#sendForm').addEventListener('submit',async e=>{
   ta.value='';ta.style.height='auto';$('#note').textContent='';
   const cid=Math.random().toString(36).slice(2,12);
   const mine=peopleCache.find(u=>u.id===me.id)||{};
-  const el=row({nick:me.nick,color:mine.color||'#0B3D2E',admin:me.admin,text,at:Date.now()},true);el.classList.add('sending');
-  $('#msgs').appendChild(el);pending.set(cid,el);scrollDown(true);
+  const el=row({nick:me.nick,color:mine.color||'#0B3D2E',admin:me.admin,country:mine.country||me.country,text,at:Date.now()},true);el.classList.add('sending');
+  activePane().appendChild(el);pending.set(cid,el);scrollDown(true);
   const fail=msg=>{el.remove();pending.delete(cid);$('#note').textContent=msg;ta.value=text};
-  try{const r=await fetch('/api/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:me.id,token:me.token,text,cid})});
+  const to=active==='main'?null:active;
+  try{const r=await fetch(to?'/api/pm':'/api/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(to?{id:me.id,token:me.token,text,cid,to}:{id:me.id,token:me.token,text,cid})});
     if(!r.ok){const d=await r.json().catch(()=>({}));if(r.status===401)return backToStart('Your session ended. Join again to keep chatting.');fail(d.error||'Message not sent.')}
   }catch(x){fail('Message not sent. Check your connection.')}
   ta.focus();
 });
-['😀','😂','😍','👍','🙏','❤️','🔥','😎','🤣','😢','👋','🇵🇰','☕','🎉'].forEach(x=>{const b=document.createElement('button');b.type='button';b.textContent=x;b.setAttribute('aria-label','Add '+x);b.onclick=()=>{ta.value+=x;ta.focus()};$('#emo').appendChild(b)});
+['😀','😂','😍','👍','🙏','❤️','🔥','😎','🤣','😢','👋','💚','☕','🎉'].forEach(x=>{const b=document.createElement('button');b.type='button';b.textContent=x;b.setAttribute('aria-label','Add '+x);b.onclick=()=>{ta.value+=x;ta.focus()};$('#emo').appendChild(b)});
 
 // ---- Admin ----
 async function admin(action,extra){

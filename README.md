@@ -57,7 +57,6 @@ To keep them permanently, either:
 
 ## Good to know
 - Messages are kept in memory only, so they disappear when the server restarts.
-- Mute is per person, in their own browser.
 - Bans are kept in memory, so they reset when the server restarts.
 - To change the name, search for "Mehfil" in public/index.html.
 
@@ -79,3 +78,14 @@ After deploying:
 1. Add the site to Google Search Console (search.google.com/search-console), verify with a DNS TXT record in Namecheap.
 2. Submit https://mehfilchat.com/sitemap.xml under Sitemaps.
 3. Use "URL inspection" → "Request indexing" for the home page.
+
+## Private messages
+- Tap someone's name in the chat (or "Message" in People online) to start a private chat. It opens as a tab next to "Main room", with an unread count.
+- Only the two people see private messages. They are kept in memory only (last 30 per pair, for reports) and are gone when either person leaves or the server restarts.
+- **Report** (inside a private chat): sends the recent private messages to all online admins, who can kick or ban from the report.
+- **Allow private messages** (People online panel): untick to stop anyone except admins messaging you privately.
+
+## Country flags
+Each person's country flag shows next to their nickname, worked out from their IP address with the free country.is service (no key needed, commercial use allowed). If that lookup fails, the browser's time zone is used instead.
+Optional: create a free IPinfo account and set `IPINFO_TOKEN` in Render's Environment to use IPinfo Lite instead.
+Flag images load from flagcdn.com. People using a VPN will show the VPN's country.

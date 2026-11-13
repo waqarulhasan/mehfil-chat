@@ -43,11 +43,13 @@ loadMods();
 const users = new Map();      // id -> { id, token, nick, color, res, sent: [] }
 const history = [];
 const bans = new Map();       // ip or nick -> expiry time
+const pmLog = new Map();      // 'idA|idB' -> last 30 private messages (memory only, for reports)
+const PM_KEEP = 30;
 const COLORS = ['#E4007C', '#0A8F6A', '#D9480F', '#5F3DC4', '#1971C2', '#C2255C', '#2B8A3E', '#E67700'];
 
 function send(res, event, data) { res.write(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`); }
 function broadcast(event, data) { for (const u of users.values()) if (u.res) send(u.res, event, data); }
-function online() { return [...users.values()].filter(u => u.res).map(u => ({ id: u.id, nick: u.nick, color: u.color, admin: !!u.admin, owner: !!u.owner })); }
+function online() { return [...users.values()].filter(u => u.res).map(u => ({ id: u.id, nick: u.nick, color: u.color, admin: !!u.admin, owner: !!u.owner, allowPM: u.allowPM !== false, country: u.country })); }
 function push(msg) { history.push(msg); if (history.length > HISTORY) history.shift(); broadcast('msg', msg); }
 function sys(text) { push({ type: 'sys', text, at: Date.now() }); }
 function clean(t) {
@@ -69,7 +71,40 @@ function banned(ip, nick) {
   return bans.has('ip:' + ip) || bans.has('nick:' + String(nick).toLowerCase());
 }
 function sameSecret(a, b) { const x = Buffer.from(String(a)), y = Buffer.from(String(b)); return x.length === y.length && crypto.timingSafeEqual(x, y); }
+function gone(u) {
+  for (const k of [...pmLog.keys()]) if (k.split('|').includes(u.id)) {
+    const other = users.get(k.split('|').find(x => x !== u.id));
+    if (other && other.res) send(other.res, 'pmgone', { id: u.id, nick: u.nick });
+    pmLog.delete(k);
+  }
+}
+// ---- Country flag from the visitor's IP address ----
+// Uses the free country.is service (no key, commercial use allowed).
+// Optional: set IPINFO_TOKEN to use IPinfo Lite instead (free, unlimited, needs a free account).
+// Results are cached for 24h. If the lookup fails, the browser's time zone is used as a fallback.
+const geoCache = new Map(); // ip -> { cc, at }
+function validCC(c) { c = String(c || '').toUpperCase(); return /^[A-Z]{2}$/.test(c) && c !== 'XX' && c !== 'T1' ? c : ''; }
+function isPrivateIP(ip) { return !ip || /^(127\.|10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.|::1$|fc|fd|fe80|::ffff:127\.)/i.test(ip); }
+async function lookupCountry(ip) {
+  ip = ip.replace(/^::ffff:/, '');
+  if (isPrivateIP(ip)) return '';
+  const hit = geoCache.get(ip); if (hit && Date.now() - hit.at < 864e5) return hit.cc;
+  let cc = '';
+  try {
+    const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 1500);
+    const url = process.env.IPINFO_TOKEN ? `https://api.ipinfo.io/lite/${encodeURIComponent(ip)}?token=${process.env.IPINFO_TOKEN}` : `https://api.country.is/${encodeURIComponent(ip)}`;
+    const r = await fetch(url, { signal: ctrl.signal }); clearTimeout(t);
+    if (r.ok) { const d = await r.json(); cc = validCC(d.country_code || d.country); }
+  } catch {}
+  if (cc) { geoCache.set(ip, { cc, at: Date.now() }); if (geoCache.size > 20000) geoCache.clear(); }
+  return cc;
+}
+async function countryOf(req, b) {
+  return validCC(req.headers['cf-ipcountry']) || await lookupCountry(ipOf(req)) || validCC(b.country);
+}
+function pmKey(a, b) { return [a, b].sort().join('|'); }
 function remove(u, event, text) {
+  gone(u);
   users.delete(u.id); clearTimeout(u.bye);
   if (u.res) { send(u.res, event, { text }); u.res.end(); u.res = null; }
 }
@@ -100,11 +135,11 @@ const server = http.createServer(async (req, res) => {
       if ([...users.values()].some(u => u.nick.toLowerCase() === nick.toLowerCase())) return json(res, 409, { error: 'That nickname is taken. Try another one.' });
       const id = crypto.randomBytes(6).toString('hex');
       const token = crypto.randomBytes(16).toString('hex');
-      const u = { id, token, nick, color: admin ? '#0B3D2E' : COLORS[users.size % COLORS.length], res: null, sent: [], joined: false, admin, owner, ip };
+      const u = { id, token, nick, color: admin ? '#0B3D2E' : COLORS[users.size % COLORS.length], res: null, sent: [], joined: false, admin, owner, ip, allowPM: true, blocks: new Set(), country: await countryOf(req, b) };
       users.set(id, u);
       // forget people who join but never open the chat
       u.bye = setTimeout(() => { if (!u.res && !u.joined) users.delete(id); }, 30000);
-      return json(res, 200, { id, token, nick, admin, owner });
+      return json(res, 200, { id, token, nick, admin, owner, country: u.country });
     } catch { return json(res, 400, { error: 'Bad request.' }); }
   }
 
@@ -131,7 +166,7 @@ const server = http.createServer(async (req, res) => {
       clearInterval(ping);
       if (u.res === res) u.res = null;
       // allow a few seconds to reconnect (e.g. phone switching network)
-      u.bye = setTimeout(() => { if (!u.res && users.has(u.id)) { users.delete(u.id); sys(`${u.nick} left the chat`); broadcast('online', online()); } }, 8000);
+      u.bye = setTimeout(() => { if (!u.res && users.has(u.id)) { gone(u); users.delete(u.id); sys(`${u.nick} left the chat`); broadcast('online', online()); } }, 8000);
     });
     return;
   }
@@ -147,7 +182,7 @@ const server = http.createServer(async (req, res) => {
       const text = clean(b.text || ''); if (!text) return json(res, 400, { error: 'Empty message.' });
       u.sent.push(now);
       const cid = String(b.cid || '').slice(0, 24);
-      push({ type: 'msg', id: crypto.randomBytes(5).toString('hex'), cid, from: u.id, nick: u.nick, color: u.color, admin: !!u.admin, text, at: now });
+      push({ type: 'msg', id: crypto.randomBytes(5).toString('hex'), cid, from: u.id, nick: u.nick, color: u.color, admin: !!u.admin, country: u.country, text, at: now });
       return json(res, 200, { ok: true });
     } catch { return json(res, 400, { error: 'Bad request.' }); }
   }
@@ -219,9 +254,66 @@ const server = http.createServer(async (req, res) => {
     } catch { return json(res, 400, { error: 'Bad request.' }); }
   }
 
+  // Private message to one person
+  if (req.method === 'POST' && url.pathname === '/api/pm') {
+    try {
+      const b = await body(req); const u = auth(b);
+      if (!u) return json(res, 401, { error: 'Please join again.' });
+      if (!u.admin && banned(u.ip, u.nick)) { remove(u, 'kicked', 'You have been banned from this chat.'); return json(res, 403, { error: 'Banned.' }); }
+      const t = users.get(b.to);
+      if (!t || !t.res) return json(res, 404, { error: 'That person has left the chat.' });
+      if (t.id === u.id) return json(res, 400, { error: "You can't message yourself." });
+      if (t.blocks.has(u.id)) return json(res, 403, { error: "You can't send private messages to this person." });
+      if (!u.admin && t.allowPM === false) return json(res, 403, { error: 'This person has turned off private messages.' });
+      if (u.blocks.has(t.id)) return json(res, 403, { error: 'You have blocked this person. Unblock them to send a message.' });
+      const now = Date.now(); u.sent = u.sent.filter(x => now - x < RATE.per);
+      if (!u.admin && u.sent.length >= RATE.count) return json(res, 429, { error: 'Slow down a little, you are sending messages too fast.' });
+      const text = clean(b.text || ''); if (!text) return json(res, 400, { error: 'Empty message.' });
+      u.sent.push(now);
+      const m = { id: crypto.randomBytes(5).toString('hex'), cid: String(b.cid || '').slice(0, 24), from: u.id, nick: u.nick, color: u.color, admin: !!u.admin, country: u.country, to: t.id, toNick: t.nick, toColor: t.color, toAdmin: !!t.admin, toCountry: t.country, text, at: now };
+      const k = pmKey(u.id, t.id); const log = pmLog.get(k) || []; log.push(m); if (log.length > PM_KEEP) log.shift(); pmLog.set(k, log);
+      send(t.res, 'pm', m); if (u.res) send(u.res, 'pm', m);
+      return json(res, 200, { ok: true });
+    } catch { return json(res, 400, { error: 'Bad request.' }); }
+  }
+
+  // Block / unblock someone (also stops their private messages)
+  if (req.method === 'POST' && url.pathname === '/api/block') {
+    try {
+      const b = await body(req); const u = auth(b);
+      if (!u) return json(res, 401, { error: 'Please join again.' });
+      if (b.on) u.blocks.add(String(b.target)); else u.blocks.delete(String(b.target));
+      return json(res, 200, { ok: true });
+    } catch { return json(res, 400, { error: 'Bad request.' }); }
+  }
+
+  // Turn private messages on or off
+  if (req.method === 'POST' && url.pathname === '/api/settings') {
+    try {
+      const b = await body(req); const u = auth(b);
+      if (!u) return json(res, 401, { error: 'Please join again.' });
+      u.allowPM = !!b.allowPM; broadcast('online', online());
+      return json(res, 200, { ok: true });
+    } catch { return json(res, 400, { error: 'Bad request.' }); }
+  }
+
+  // Report someone: sends your recent private messages with them to online admins
+  if (req.method === 'POST' && url.pathname === '/api/report') {
+    try {
+      const b = await body(req); const u = auth(b);
+      if (!u) return json(res, 401, { error: 'Please join again.' });
+      const t = users.get(b.target);
+      const log = t ? (pmLog.get(pmKey(u.id, t.id)) || []) : [];
+      const admins = [...users.values()].filter(a => a.admin && a.res && a.id !== (t && t.id));
+      const report = { id: crypto.randomBytes(4).toString('hex'), by: u.nick, target: t ? t.nick : 'someone who left', targetId: t ? t.id : null, reason: clean(b.reason || '').slice(0, 200), lines: log.map(m => ({ nick: m.nick, text: m.text, at: m.at })), at: Date.now() };
+      for (const a of admins) send(a.res, 'report', report);
+      return json(res, 200, { ok: true, admins: admins.length });
+    } catch { return json(res, 400, { error: 'Bad request.' }); }
+  }
+
   // Leave
   if (req.method === 'POST' && url.pathname === '/api/leave') {
-    try { const b = await body(req); const u = auth(b); if (u) { users.delete(u.id); if (u.res) u.res.end(); sys(`${u.nick} left the chat`); broadcast('online', online()); } } catch {}
+    try { const b = await body(req); const u = auth(b); if (u) { gone(u); users.delete(u.id); if (u.res) u.res.end(); sys(`${u.nick} left the chat`); broadcast('online', online()); } } catch {}
     return json(res, 200, { ok: true });
   }
 
